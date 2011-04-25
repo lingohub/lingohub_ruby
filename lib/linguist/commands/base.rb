@@ -57,12 +57,13 @@ module Linguist::Command
       original_dir = Dir.pwd
       Dir.chdir(base_dir)
 
-      git("remote -v").split("\n").each do |remote|
-        name, url, method = remote.split(/\s/)
-        if url =~ /^git@#{heroku.host}:([\w\d-]+)\.git$/
-          remotes[name] = $1
-        end
-      end
+      # TODO
+#      git("remote -v").split("\n").each do |remote|
+#        name, url, method = remote.split(/\s/)
+#        if url =~ /^git@#{heroku.host}:([\w\d-]+)\.git$/
+#          remotes[name] = $1
+#        end
+#      end
 
       Dir.chdir(original_dir)
       remotes
@@ -94,6 +95,11 @@ module Linguist::Command
 
     def escape(value)
       linguist.escape(value)
+    end
+
+    def project(title=nil)
+      title ||= project_title
+      @project ||= linguist.project(title) 
     end
 
     def project_title

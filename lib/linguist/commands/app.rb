@@ -31,8 +31,6 @@ module Linguist::Command
     end
 
     def rename
-      project = linguist.project project_title
-
       newtitle = args.shift.downcase.strip rescue ''
       oldtitle = project.title
 
@@ -45,8 +43,6 @@ module Linguist::Command
     end
 
     def info
-      project = linguist.project project_title
-
       display "=== #{project.title}"
       display "Web URL:        #{project.weburl}"
       display "Owner:          #{project.owner}"
@@ -60,7 +56,6 @@ module Linguist::Command
     end
 
     def destroy
-      project = linguist.project project_title
       display "=== #{project.title}"
       display "Web URL:        #{project.weburl}"
       display "Owner:          #{project.owner}"
