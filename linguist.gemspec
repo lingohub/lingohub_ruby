@@ -1,6 +1,6 @@
 require File.expand_path("../lib/linguist/version", __FILE__)
 
-Gem::Specification.new do |s|
+Gem::Specification.new do |gem|
   gem.name    = "linguist"
   gem.version = Linguist::VERSION
 

@@ -38,6 +38,12 @@ class Linguist::Client
     @host       = host
   end
 
+  def project(title)
+    project = self.projects[title]
+    raise(CommandFailed, "=== You aren't associated for a project named '#{title}'") if project.nil?
+    project
+  end
+
   def projects
     return Linguist::Models::Projects.new(self)
   end

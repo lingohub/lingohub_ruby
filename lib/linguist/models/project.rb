@@ -22,6 +22,18 @@ module Linguist
         @link   = link
       end
 
+      def create!(attributes={})
+        self.title = attribtes[:title]
+      end
+
+      def destroy
+        @client.delete self.link
+      end
+
+      def update(attributes={})
+        @client.put self.link, {:project => attributes}
+      end
+
       private
 
       def fetch

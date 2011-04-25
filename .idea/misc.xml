@@ -3,10 +3,6 @@
   <component name="DependencyValidationManager">
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
   </component>
-  <component name="Git.Settings">
-    <option name="CHECKOUT_INCLUDE_TAGS" value="false" />
-    <option name="UPDATE_CHANGES_POLICY" value="STASH" />
-  </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="JRuby SDK 1.6.0-p330" project-jdk-type="JRUBY_SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="RVM: ruby-1.9.2-p180 [global]" project-jdk-type="RUBY_SDK" />
 </project>
 

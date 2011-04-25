@@ -6,9 +6,10 @@ module Linguist::Command
 
     attr_accessor :args
     attr_reader :autodetected_app
+
     def initialize(args, linguist=nil)
-      @args = args
-      @linguist = linguist
+      @args             = args
+      @linguist         = linguist
       @autodetected_app = false
     end
 
@@ -20,14 +21,20 @@ module Linguist::Command
       app = extract_option('--app', false)
       raise(CommandFailed, "You must specify an app name after --app") if app == false
       unless app
-        app = extract_app_in_dir(Dir.pwd) ||
-        raise(CommandFailed, "No app specified.\nRun this command from app folder or set it adding --app <app name>") if force
+        app = extract_app_from_git || extract_from_dir_name ||
+          raise(CommandFailed, "No app specified.\nRun this command from app folder or set it adding --app <app name>") if force
         @autodetected_app = true
       end
       app
     end
 
-    def extract_app_in_dir(dir)
+    def extract_from_dir_name
+      dir = Dir.pwd
+      File.basename(dir)
+    end
+
+    def extract_app_from_git
+      dir = Dir.pwd
       return unless remotes = git_remotes(dir)
 
       if remote = extract_option('--remote')
@@ -46,7 +53,7 @@ module Linguist::Command
     end
 
     def git_remotes(base_dir=Dir.pwd)
-      remotes = {}
+      remotes      = { }
       original_dir = Dir.pwd
       Dir.chdir(base_dir)
 
@@ -82,11 +89,15 @@ module Linguist::Command
     end
 
     def app_urls(name)
-      "#{web_url(name)} | #{git_url(name)}"
+#      "#{web_url(name)} | #{git_url(name)}"
     end
 
     def escape(value)
       linguist.escape(value)
+    end
+
+    def project_title
+      (args.first && !args.first =~ /^\-\-/) ? args.first : extract_app
     end
   end
 
