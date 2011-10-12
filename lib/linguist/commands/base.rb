@@ -10,30 +10,35 @@ module Linguist::Command
     def initialize(args, linguist=nil)
       @args             = args
       @linguist         = linguist
-      @autodetected_app = false
+      @autodetected_project_name = false
     end
 
     def linguist
       @linguist ||= Linguist::Command.run_internal('auth:client', args)
     end
 
-    def extract_app(force=true)
-      app = extract_option('--app', false)
-      raise(CommandFailed, "You must specify an app name after --app") if app == false
-      unless app
-        app = extract_app_from_git || extract_from_dir_name ||
-          raise(CommandFailed, "No app specified.\nRun this command from app folder or set it adding --app <app name>") if force
-        @autodetected_app = true
+    def current_project_title(force=true)
+      project_title = extract_project_title_from_args
+      unless project_title
+        project_title = extract_project_title_from_git || extract_project_title_from_dir_name ||
+          raise(CommandFailed, "No project specified.\nRun this command from project folder or set it adding --project <title>") if force
+        @autodetected_project_name = true
       end
-      app
+      project_title
     end
 
-    def extract_from_dir_name
+    def extract_project_title_from_args
+      project_title = extract_option('--project', false)
+      raise(CommandFailed, "You must specify a project title after --project") if project_title == false
+      project_title
+    end
+
+    def extract_project_title_from_dir_name
       dir = Dir.pwd
       File.basename(dir)
     end
 
-    def extract_app_from_git
+    def extract_project_title_from_git
       dir = Dir.pwd
       return unless remotes = git_remotes(dir)
 
@@ -103,7 +108,7 @@ module Linguist::Command
     end
 
     def project_title
-      (args.first && !(args.first =~ /^\-\-/)) ? args.first : extract_app
+      (args.first && !(args.first =~ /^\-\-/)) ? args.first : current_project_title
     end
   end
 

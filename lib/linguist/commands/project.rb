@@ -2,7 +2,7 @@ require 'readline'
 require 'launchy'
 
 module Linguist::Command
-  class App < Base
+  class Project < Base
     def login
       Linguist::Command.run_internal "auth:reauthorize", args.dup
     end

@@ -1,6 +1,7 @@
 module Linguist
   module Models
     require 'linguist/models/resource'
+    require 'linguist/models/collaborator'
 
     class Project
       def self.lazy_attr_accessor(*params)
@@ -17,7 +18,7 @@ module Linguist
         end
       end
 
-      lazy_attr_accessor(:title, :link, :weburl, :resources_url, :translations_url, :translations_count, :owner)
+      lazy_attr_accessor(:title, :link, :weburl, :resources_url, :collaborators_url, :invitations_url, :translations_url, :translations_count, :owner)
 
       def initialize(client, link)
         @client = client
@@ -34,6 +35,10 @@ module Linguist
 
       def update(attributes={ })
         @client.put self.link, { :project => attributes }
+      end
+
+      def invite_collaborator(email)
+        @client.post(self.invitations_url, :invitation => { :email => email })
       end
 
       def resources
@@ -54,6 +59,25 @@ module Linguist
         @resources
       end
 
+      def collaborators
+        unless defined? @collaborators
+          @collaborators    = []
+          response      = @client.get(self.collaborators_url)
+          resource_hash = JSON.parse(response)
+          members = resource_hash["collaborators"]["members"]
+          members.each do |member|
+            link = member["link"]["href"] rescue ""
+            collaborator = Linguist::Models::Collaborator.new(@client, link)
+            collaborator.email = member["email"]
+            collaborator.display_name = member["display_name"]
+            collaborator.roles = member["roles"]
+            @collaborators << collaborator
+          end
+        end
+        puts "COLLABORATORS #{@collaborators}"
+        @collaborators
+      end
+
       private
 
       def fetch
@@ -65,9 +89,12 @@ module Linguist
         weburl = links[1]["href"]
         translations_url = links[2]["href"]
         resources_url = links[3]["href"]
+        collaborators_url = links[4]["href"]
+        invitations_url = links[5]["href"]
         init_attributes :title => project_hash["title"], :link => link, :weburl => weburl,
                         :owner => project_hash["owner_email"], :translations_count => project_hash["translations_count"],
-                        :translations_url => translations_url, :resources_url => resources_url
+                        :translations_url => translations_url, :resources_url => resources_url,
+                        :collaborators_url => collaborators_url, :invitations_url => invitations_url
       end
 
       def init_attributes(attributes)

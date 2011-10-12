@@ -53,7 +53,7 @@ module Linguist
             begin
               return eval("Linguist::Command::#{command.capitalize}"), :index
             rescue NameError, NoMethodError
-              return Linguist::Command::App, command.to_sym
+              return Linguist::Command::Project, command.to_sym
             end
           else
             begin

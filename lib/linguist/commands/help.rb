@@ -36,23 +36,24 @@ module Linguist::Command
         group.command 'help',                         'show this usage'
         group.command 'version',                      'show the gem version'
         group.space
-#        group.command 'login',                        'log in with your linguist credentials'
-#        group.command 'logout',                       'clear local authentication credentials'
-#        group.space
-        group.command 'list',                         'list your projects'
-        group.command 'create <name>',                'create a new project'
-        group.command 'info <name>',                  'show project info, like web url and number of translations'
-        group.command 'open <name>',                  'open the app in a web browser'
-        group.command 'rename <oldname> <newname>',   'rename the app'
-        group.command 'destroy <name',                'destroy the app permanently'
+      end
+
+      group 'Project Commands' do |group|
+        group.command 'project:list',                         'list your projects'
+        group.command 'project:create <name>',                'create a new project'
+        group.command 'project:info <name>',                  'show project info, like web url and number of translations'
+        group.command 'project:open <name>',                  'open the project in a web browser'
+        group.command 'project:rename <oldname> <newname>',   'rename the project'
+        group.command 'project:destroy <name',                'destroy the project permanently'
         group.space
       end
 
-#      group 'Plugins' do |group|
-#        group.command 'plugins',                      'list installed plugins'
-#        group.command 'plugins:install <url>',        'install the plugin from the specified git url'
-#        group.command 'plugins:uninstall <url/name>', 'remove the specified plugin'
-#      end
+      group 'Collaborator Commands' do |group|
+        group.command 'collaborator:list',           'list project collaborators'
+        group.command 'collaborator:invite <email>', 'invite the collaborator'
+        group.command 'collaborator:remove <email>', 'remove the collaborator'
+        group.space
+      end
     end
 
     def index
