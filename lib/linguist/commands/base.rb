@@ -103,7 +103,7 @@ module Linguist::Command
     end
 
     def project_title
-      (args.first && !args.first =~ /^\-\-/) ? args.first : extract_app
+      (args.first && !(args.first =~ /^\-\-/)) ? args.first : extract_app
     end
   end
 

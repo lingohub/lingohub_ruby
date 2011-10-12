@@ -31,10 +31,9 @@ module Linguist::Command
     end
 
     def rename
-      newtitle = args.shift.downcase.strip rescue ''
       oldtitle = project.title
 
-      raise(CommandFailed, "Invalid name.") if newtitle == ''
+      newtitle = args[1].downcase.strip rescue raise(CommandFailed, "Invalid new project name")
 
       project.update(:title => newtitle)
       display("Renaming project from #{oldtitle} to #{newtitle}")
@@ -50,9 +49,7 @@ module Linguist::Command
     end
 
     def open
-      project = linguist.project
-      url     = project.weburl
-      Launchy.open url
+      Launchy.open project.weburl
     end
 
     def destroy

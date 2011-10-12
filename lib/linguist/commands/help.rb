@@ -40,11 +40,11 @@ module Linguist::Command
 #        group.command 'logout',                       'clear local authentication credentials'
 #        group.space
         group.command 'list',                         'list your projects'
-#        group.command 'create [<name>]',              'create a new app'
-        group.command 'info',                         'show app info, like web url and number of translations'
-        group.command 'open',                         'open the app in a web browser'
-        group.command 'rename <newname>',             'rename the app'
-        group.command 'destroy',                      'destroy the app permanently'
+        group.command 'create <name>',                'create a new project'
+        group.command 'info <name>',                  'show project info, like web url and number of translations'
+        group.command 'open <name>',                  'open the app in a web browser'
+        group.command 'rename <oldname> <newname>',   'rename the app'
+        group.command 'destroy <name',                'destroy the app permanently'
         group.space
       end
 

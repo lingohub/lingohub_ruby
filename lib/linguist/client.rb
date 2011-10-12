@@ -25,22 +25,27 @@ class Linguist::Client
     "linguist-gem/#{version}"
   end
 
-  attr_accessor :host, :user, :auth_token
+  attr_accessor :host, :user, :password
 
-  def self.auth(user, password, host='lingui.st')
-    client = new(user, password, host)
-    OkJson.decode client.post('/sessions', { :email => user, :password => password }, :accept => 'json').to_s
+  def self.auth(options)
+    client = new(options)
+    OkJson.decode client.post('/sessions', {}, :accept => 'json').to_s
   end
 
-  def initialize(user, auth_token, host='lingui.st')
-    @user       = user
-    @auth_token = auth_token
-    @host       = host
+  def initialize(options)
+    @user       = options[:username]
+    @password   = options[:password]
+    @auth_token = options[:auth_token]
+    @host       = options[:host] || 'lingui.st'
+  end
+
+  def credentials
+    @auth_token.nil? ? {:username => @user, :password => @password} : {:username => @auth_token, :password => ""}
   end
 
   def project(title)
     project = self.projects[title]
-    raise(CommandFailed, "=== You aren't associated for a project named '#{title}'") if project.nil?
+    raise(Linguist::Command::CommandFailed, "=== You aren't associated for a project named '#{title}'") if project.nil?
     project
   end
 
@@ -68,7 +73,7 @@ class Linguist::Client
     headers = linguist_headers.merge(extra_headers)
 #    payload  = auth_params.merge(payload)
     args     = [method, payload, headers].compact
-    response = resource(uri).send(*args)
+    response = resource(uri, credentials).send(*args)
 
     puts "RESPONSE #{response}"
 
@@ -76,19 +81,19 @@ class Linguist::Client
     response
   end
 
-  def resource(uri)
+  def resource(uri, credentials)
 
     RestClient.proxy = ENV['HTTP_PROXY'] || ENV['http_proxy']
     if uri =~ /^https?/
 #      RestClient::Resource.new(uri, user, auth_token)
-      RestClient::Resource.new(uri)
+      RestClient::Resource.new(uri, :user => credentials[:username], :password => credentials[:password])
     elsif host =~ /^https?/
 #      RestClient::Resource.new(host, user, auth_token)[uri]
-      RestClient::Resource.new(host)[uri]
+      RestClient::Resource.new(host, :user => credentials[:username], :password => credentials[:password])[uri]
     else
 #      RestClient::Resource.new("https://api.#{host}", user, password)[uri]
 #      RestClient::Resource.new("http://localhost:3000/api/v1", user, auth_token)[uri]
-      RestClient::Resource.new("http://localhost:3000/api/v1")[uri]
+      RestClient::Resource.new("http://localhost:3000/api/v1", :user => credentials[:username], :password => credentials[:password])[uri]
     end
   end
 
@@ -107,8 +112,6 @@ class Linguist::Client
   def linguist_headers # :nodoc:
     {
       'X-Linguist-API-Version'     => '1',
-      'X-Linguist-User-Email'      => user,
-      'X-Linguist-User-Auth-Token' => auth_token,
       'User-Agent'                 => self.class.gem_version_string,
       'X-Ruby-Version'             => RUBY_VERSION,
       'X-Ruby-Platform'            => RUBY_PLATFORM,
