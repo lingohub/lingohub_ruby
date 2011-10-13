@@ -54,6 +54,13 @@ module Linguist::Command
         group.command 'collaborator:remove <email>', 'remove the collaborator'
         group.space
       end
+
+      group 'Translation Commands' do |group|
+        group.command 'translation:down --all --directory <path>',                 'download all resource files'
+        group.command 'translation:down <file1> <file2> ... --directory <path>',   'download specific resource files'
+        group.command 'translation:up <file1> <file2> ... --locale <iso2_slug>',   'upload specific resource files'
+        group.space
+      end
     end
 
     def index

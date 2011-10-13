@@ -17,7 +17,7 @@ module Linguist::Command
       @linguist ||= Linguist::Command.run_internal('auth:client', args)
     end
 
-    def current_project_title(force=true)
+    def project_title(force=true)
       project_title = extract_project_title_from_args
       unless project_title
         project_title = extract_project_title_from_git || extract_project_title_from_dir_name ||
@@ -105,10 +105,6 @@ module Linguist::Command
     def project(title=nil)
       title ||= project_title
       @project ||= linguist.project(title) 
-    end
-
-    def project_title
-      (args.first && !(args.first =~ /^\-\-/)) ? args.first : current_project_title
     end
   end
 

@@ -75,8 +75,6 @@ class Linguist::Client
     args     = [method, payload, headers].compact
     response = resource(uri, credentials).send(*args)
 
-    puts "RESPONSE #{response}"
-
 #    extract_warning(response)
     response
   end

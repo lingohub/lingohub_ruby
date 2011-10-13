@@ -22,10 +22,10 @@ module Linguist
 
       def initialize(client, link)
         @client = client
-        @link   = link
+        @link = link
       end
 
-      def create!(attributes={ })
+      def create!(attributes={})
         self.title = attribtes[:title]
       end
 
@@ -33,36 +33,31 @@ module Linguist
         @client.delete self.link
       end
 
-      def update(attributes={ })
-        @client.put self.link, { :project => attributes }
+      def update(attributes={})
+        @client.put self.link, {:project => attributes}
       end
 
       def invite_collaborator(email)
-        @client.post(self.invitations_url, :invitation => { :email => email })
+        @client.post(self.invitations_url, :invitation => {:email => email})
       end
 
       def resources
         unless defined? @resources
-          @resources    = { }
-          response      = @client.get(self.resources_url)
+          @resources = {}
+          response = @client.get(self.resources_url)
           resource_hash = JSON.parse(response)
           members = resource_hash["resources"]["members"]
           members.each do |member|
-            member["link"].each do |link|
-              file_name = link["rel"]
-              locale, extension = File.basename(file_name, '.*'), File.extname(file_name)
-              @resources[file_name] = Linguist::Models::Resource.new(@client, locale, extension, link["href"])
-            end
+            @resources[member["name"]] = Linguist::Models::Resource.new(@client, member["link"]["href"])
           end
         end
-        puts "RESOURCES #{@resources}"
         @resources
       end
 
       def collaborators
         unless defined? @collaborators
-          @collaborators    = []
-          response      = @client.get(self.collaborators_url)
+          @collaborators = []
+          response = @client.get(self.collaborators_url)
           resource_hash = JSON.parse(response)
           members = resource_hash["collaborators"]["members"]
           members.each do |member|
@@ -74,8 +69,19 @@ module Linguist
             @collaborators << collaborator
           end
         end
-        puts "COLLABORATORS #{@collaborators}"
         @collaborators
+      end
+
+      def pull_resource(dir, file_name)
+        raise "Project does not contain that file." unless self.resources.has_key?(file_name)
+        save_to_file(File.join(dir, file_name), self.resources[file_name].content)
+      end
+
+      def push_resource(path, locale)
+        raise "Path #{path} does not exists" unless File.exists?(path)
+        request = { :file => File.new(path, "rb") }
+        request.merge!({ :iso2_slug => locale }) if locale
+        @client.post(self.resources_url, request)
       end
 
       private
@@ -103,6 +109,10 @@ module Linguist
             self.send "#{key}=", value
           end
         end
+      end
+
+      def save_to_file(path, content)
+        File.open(path, 'w+') { |f| f.write(content) }
       end
 
     end
