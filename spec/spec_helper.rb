@@ -1,10 +1,11 @@
-require "bundler"
-Bundler.setup
+require "bundler/setup"
 
 require "rspec"
-require "newgem"
 require "support/matchers"
 
-Rspec.configure do |config|
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), "../")
+require "lib/linguist"
+
+RSpec.configure do |config|
   config.include NewGem::Spec::Matchers
 end

@@ -18,12 +18,7 @@ Gem::Specification.new do |gem|
   gem.files        = Dir["{lib}/**/*.rb", "bin/*", "LICENSE", "*.md"]
   gem.require_path = 'lib'
 
-  gem.add_development_dependency "fakefs", "~> 0.3.1"
-  gem.add_development_dependency "rake"
-  gem.add_development_dependency "rspec", "~> 1.3.0"
-  gem.add_development_dependency "taps", "~> 0.3.20"
-  gem.add_development_dependency "webmock", "~> 1.5.0"
-
   gem.add_dependency "rest-client", ">= 1.4.0", "< 1.7.0"
   gem.add_dependency "launchy", "~> 0.3.2"
+  gem.add_dependency "stringex", "~>1.2.1"
 end
