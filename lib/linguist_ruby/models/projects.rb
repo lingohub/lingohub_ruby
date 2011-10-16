@@ -1,6 +1,6 @@
 module Linguist
   module Models
-    require 'linguist/models/project'
+    require 'linguist_ruby/models/project'
 
     class Projects
 

@@ -1,7 +1,7 @@
-require File.expand_path("../lib/linguist/version", __FILE__)
+require File.expand_path("../lib/linguist_ruby/version", __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.name    = "linguist"
+  gem.name    = "linguist_ruby"
   gem.version = Linguist::VERSION
 
   gem.author      = "Linguist"

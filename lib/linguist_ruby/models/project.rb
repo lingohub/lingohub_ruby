@@ -1,7 +1,7 @@
 module Linguist
   module Models
-    require 'linguist/models/resource'
-    require 'linguist/models/collaborator'
+    require 'linguist_ruby/models/resource'
+    require 'linguist_ruby/models/collaborator'
 
     class Project
       def self.lazy_attr_accessor(*params)

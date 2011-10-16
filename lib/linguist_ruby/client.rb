@@ -1,7 +1,7 @@
 require 'rest_client'
 require 'uri'
 require 'time'
-require 'linguist/version'
+require 'linguist_ruby/version'
 require 'vendor/okjson'
 require 'json'
 require 'linguist/models/projects'

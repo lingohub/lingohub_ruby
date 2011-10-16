@@ -1,4 +1,4 @@
-require "linguist/client"
+require "linguist_ruby/client"
 
 module Linguist::Command
   class Auth < Base

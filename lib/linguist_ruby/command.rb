@@ -1,5 +1,5 @@
-require 'linguist/helpers'
-require 'linguist/commands/base'
+require 'linguist_ruby/helpers'
+require 'linguist_ruby/commands/base'
 
 Dir["#{File.dirname(__FILE__)}/commands/*.rb"].each { |c| require c }
 
