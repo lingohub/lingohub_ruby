@@ -41,24 +41,25 @@ module Linguist::Command
       group 'Project Commands' do |group|
         group.command 'project:list',                         'list your projects'
         group.command 'project:create <name>',                'create a new project'
-        group.command 'project:info <name>',                  'show project info, like web url and number of translations'
-        group.command 'project:open <name>',                  'open the project in a web browser'
+        group.command 'project:info --project <name>',        'show project info, like web url and number of translations'
+        group.command 'project:open --project <name>',        'open the project in a web browser'
         group.command 'project:rename <oldname> <newname>',   'rename the project'
-        group.command 'project:destroy <name',                'destroy the project permanently'
+        group.command 'project:destroy --project <name>',      'destroy the project permanently'
         group.space
       end
 
       group 'Collaborator Commands' do |group|
-        group.command 'collaborator:list',           'list project collaborators'
-        group.command 'collaborator:invite <email>', 'invite the collaborator'
-        group.command 'collaborator:remove <email>', 'remove the collaborator'
+        group.command 'collaborator:list --project <name>',           'list project collaborators'
+        group.command 'collaborator:invite <email> --project <name>', 'invite the collaborator'
+        group.command 'collaborator:remove <email> --project <name>', 'remove the collaborator'
         group.space
       end
 
       group 'Translation Commands' do |group|
-        group.command 'translation:down --all --directory <path>',                 'download all resource files'
-        group.command 'translation:down <file1> <file2> ... --directory <path>',   'download specific resource files'
-        group.command 'translation:up <file1> <file2> ... --locale <iso2_slug>',   'upload specific resource files'
+        group.command 'translation:down --all --directory <path> --project <name>',                                          'download all resource files'
+        group.command 'translation:down <file1> <file2> ... --directory <path> --project <name>',                            'download specific resource files'
+        group.command 'translation:down <file> --query <query> --directory <path> --locale <iso2_slug> --project <name>',    'search for translations and download them to file'
+        group.command 'translation:up <file1> <file2> ... --locale <iso2_slug> --project <name>',                            'upload specific resource files'
         group.space
       end
     end
