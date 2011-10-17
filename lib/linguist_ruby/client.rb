@@ -4,7 +4,7 @@ require 'time'
 require 'linguist_ruby/version'
 require 'vendor/okjson'
 require 'json'
-require 'linguist/models/projects'
+require 'linguist_ruby/models/projects'
 
 # A Ruby class to call the Linguist REST API.  You might use this if you want to
 # manage your Linguist apps from within a Ruby program, such as Capistrano.
