@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    linguist (0.0.2)
+    linguist_ruby (0.0.3)
       launchy (~> 0.3.2)
       rest-client (>= 1.4.0, < 1.7.0)
       stringex (~> 1.2.1)
@@ -54,7 +54,7 @@ PLATFORMS
 DEPENDENCIES
   fakefs (~> 0.3.1)
   i18n (~> 0.6.0)
-  linguist!
+  linguist_ruby!
   rake
   rspec (~> 2.6.0)
   taps (~> 0.3.20)
