@@ -88,7 +88,7 @@ module Linguist
         parameters = {:filename => filename, :query => query}
         parameters.merge!({:iso2_slug => locale}) unless locale.nil? or locale.strip.empty?
 
-        content = @client.post(search_url, parameters)
+        content = @client.get(search_url, parameters)
         save_to_file(File.join(directory, filename), content)
       end
 
