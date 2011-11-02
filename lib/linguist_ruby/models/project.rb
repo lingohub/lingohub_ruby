@@ -18,7 +18,7 @@ module Linguist
         end
       end
 
-      lazy_attr_accessor(:title, :link, :weburl, :resources_url, :collaborators_url, :invitations_url, :translations_url, :translations_count, :owner)
+      lazy_attr_accessor(:title, :link, :weburl, :resources_url, :collaborators_url, :invitations_url, :translations_url, :search_url, :translations_count, :owner)
 
       def initialize(client, link)
         @client = client
@@ -72,9 +72,9 @@ module Linguist
         @collaborators
       end
 
-      def pull_resource(dir, file_name)
-        raise "Project does not contain that file." unless self.resources.has_key?(file_name)
-        save_to_file(File.join(dir, file_name), self.resources[file_name].content)
+      def pull_resource(directory, filename)
+        raise "Project does not contain that file." unless self.resources.has_key?(filename)
+        save_to_file(File.join(directory, filename), self.resources[filename].content)
       end
 
       def push_resource(path, locale)
@@ -82,6 +82,14 @@ module Linguist
         request = { :file => File.new(path, "rb") }
         request.merge!({ :iso2_slug => locale }) if locale
         @client.post(self.resources_url, request)
+      end
+
+      def pull_search_results(directory, filename, query, locale = nil)
+        parameters = {:filename => filename, :query => query}
+        parameters.merge!({:iso2_slug => locale}) unless locale.nil? or locale.strip.empty?
+
+        content = @client.get(search_url, parameters)
+        save_to_file(File.join(directory, filename), content)
       end
 
       private
@@ -97,10 +105,12 @@ module Linguist
         resources_url = links[3]["href"]
         collaborators_url = links[4]["href"]
         invitations_url = links[5]["href"]
+        search_url = links[6]["href"]
         init_attributes :title => project_hash["title"], :link => link, :weburl => weburl,
                         :owner => project_hash["owner_email"], :translations_count => project_hash["translations_count"],
                         :translations_url => translations_url, :resources_url => resources_url,
-                        :collaborators_url => collaborators_url, :invitations_url => invitations_url
+                        :collaborators_url => collaborators_url, :invitations_url => invitations_url,
+                        :search_url => search_url
       end
 
       def init_attributes(attributes)

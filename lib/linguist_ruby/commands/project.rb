@@ -31,14 +31,11 @@ module Linguist::Command
     end
 
     def rename
-      oldtitle = project.title
-
+      oldtitle = args[0].downcase.strip rescue raise(CommandFailed, "Invalid old project name")
       newtitle = args[1].downcase.strip rescue raise(CommandFailed, "Invalid new project name")
 
-      project.update(:title => newtitle)
-      display("Renaming project from #{oldtitle} to #{newtitle}")
-
-      display app_urls(newtitle)
+      project(oldtitle).update(:title => newtitle)
+      display("Project renamed from #{oldtitle} to #{newtitle}")
     end
 
     def info
