@@ -3,15 +3,33 @@ require "stringex"
 
 module I18n
   class << self
-    alias :old_translate :translate
+    alias :base_translate :translate
+    alias :base_localize :localize
 
-    def translate(*args)
-      result = old_translate(args)
-      result = wrap_with_wysiwyt(args.dup.shift, result) if enabled?
-      result
+    def translate(key, options={ })
+      result = base_translate(key, options)
+      wysiwyt_enabled = options.has_key?(:wysiwyt) ? options.delete(:wysiwyt) : true
+      if wysiwyt_enabled && enabled?
+        result = wrap_with_wysiwyt(key, result)
+        result.html_safe
+      else
+        result
+      end
+    end
+
+    def localize(object, options = { })
+      result = base_localize(object, options)
+      wysiwyt_enabled = options.has_key?(:wysiwyt) ? options.delete(:wysiwyt) : true
+      if wysiwyt_enabled && enabled?
+        result = wrap_with_wysiwyt(object, result)
+        result.html_safe
+      else
+        result
+      end
     end
 
     alias :t :translate
+    alias :l :localize
 
     private
 
@@ -24,15 +42,15 @@ module I18n
     end
 
     def wrap_with_wysiwyt(translation_title, translation_phrase)
-      "<span data-phrase_url=\"#{link_to_translation(translation_title)}\" data-locale=\"#{locale}\" data-master-phrase=\"#{translation_title}\">#{translation_phrase}</span>"
+      "<span data-translation_url=\"#{link_to_translation_phrase(translation_title)}\" >#{translation_phrase}</span>"
     end
 
-    def link_to_translation(translation_title)
-      username = option_to_url(Linguist.username)
-      project = option_to_url(Linguist.project)
-      translation_title = translation_title.to_url
+    def link_to_translation_phrase(translation_title)
+      username          = option_to_url(Linguist.username)
+      project           = option_to_url(Linguist.project)
+      translation_title = translation_title.to_s.to_url
 
-      "#{Linguist.protocol}://#{Linguist.host}/#{username}/#{project}/#{translation_title}"
+      "#{Linguist.protocol}://#{Linguist.host}/#{username}/#{project}/translations/#{translation_title}/phrases/#{locale}"
     end
 
     def option_to_url(option)

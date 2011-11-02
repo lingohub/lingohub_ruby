@@ -19,6 +19,6 @@ Gem::Specification.new do |gem|
   gem.require_path = 'lib'
 
   gem.add_dependency "rest-client", ">= 1.4.0", "< 1.7.0"
-  gem.add_dependency "launchy", "~> 0.3.2"
+  gem.add_dependency "launchy"
   gem.add_dependency "stringex", "~>1.2.1"
 end

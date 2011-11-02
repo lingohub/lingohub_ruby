@@ -1,5 +1,5 @@
-require "linguist/client"
-require "linguist/rails3/railtie" if defined?(Rails)
+require "linguist_ruby/client"
+require "linguist_ruby/rails3/railtie" if defined?(Rails)
 
 module Linguist
   class << self
