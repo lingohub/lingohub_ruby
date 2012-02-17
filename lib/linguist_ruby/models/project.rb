@@ -26,7 +26,7 @@ module Linguist
       end
 
       def create!(attributes={})
-        self.title = attribtes[:title]
+        self.title = attributes[:title]
       end
 
       def destroy
