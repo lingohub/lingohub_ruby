@@ -12,8 +12,6 @@ Gem::Specification.new do |gem|
   gem.description = "Client library and command-line tool to translate Ruby based apps with lingohub."
   gem.executables = "lingohub"
 
-  gem.required_rubygems_version = ">= 1.3.6"
-
   # If you need to check in files that aren't .rb files, add them here
   gem.files        = Dir["{lib}/**/*.rb", "bin/*", "LICENSE", "*.md"]
   gem.require_path = 'lib'
