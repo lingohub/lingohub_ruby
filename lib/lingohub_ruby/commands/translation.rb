@@ -1,4 +1,4 @@
-module Linguist::Command
+module Lingohub::Command
   class Translation < Base
     def down
       project #project validation

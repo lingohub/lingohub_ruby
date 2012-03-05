@@ -1,28 +1,28 @@
 require 'rest_client'
 require 'uri'
 require 'time'
-require 'linguist_ruby/version'
+require 'lingohub_ruby/version'
 require 'vendor/okjson'
 require 'json'
-require 'linguist_ruby/models/projects'
+require 'lingohub_ruby/models/projects'
 
-# A Ruby class to call the Linguist REST API.  You might use this if you want to
-# manage your Linguist apps from within a Ruby program, such as Capistrano.
+# A Ruby class to call the lingohub REST API.  You might use this if you want to
+# manage your lingohub apps from within a Ruby program, such as Capistrano.
 #
 # Example:
 #
-#   require 'linguist'
-#   linguist = Linguist::Client.new('me@example.com', 'mypass')
-#   linguist.create('myapp')
+#   require 'lingohub'
+#   lingohub = Lingohub::Client.new('me@example.com', 'mypass')
+#   lingohub.create('myapp')
 #
-class Linguist::Client
+class Lingohub::Client
 
   def self.version
-    Linguist::VERSION
+    Lingohub::VERSION
   end
 
   def self.gem_version_string
-    "linguist-gem/#{version}"
+    "lingohub-gem/#{version}"
   end
 
   attr_accessor :host, :user, :password
@@ -36,7 +36,7 @@ class Linguist::Client
     @user       = options[:username]
     @password   = options[:password]
     @auth_token = options[:auth_token]
-    @host       = options[:host] || 'lingui.st'
+    @host       = options[:host] || 'lingohub.com'
   end
 
   def credentials
@@ -45,12 +45,12 @@ class Linguist::Client
 
   def project(title)
     project = self.projects[title]
-    raise(Linguist::Command::CommandFailed, "=== You aren't associated for a project named '#{title}'") if project.nil?
+    raise(Lingohub::Command::CommandFailed, "=== You aren't associated for a project named '#{title}'") if project.nil?
     project
   end
 
   def projects
-    return Linguist::Models::Projects.new(self)
+    return Lingohub::Models::Projects.new(self)
   end
 
   def get(uri, extra_headers={ }) # :nodoc:
@@ -70,7 +70,7 @@ class Linguist::Client
   end
 
   def process(method, uri, extra_headers={ }, payload=nil)
-    headers = linguist_headers.merge(extra_headers)
+    headers = lingohub_headers.merge(extra_headers)
 #    payload  = auth_params.merge(payload)
     args     = [method, payload, headers].compact
     response = resource(uri, credentials).send(*args)
@@ -107,9 +107,9 @@ class Linguist::Client
 #    end
   end
 
-  def linguist_headers # :nodoc:
+  def lingohub_headers # :nodoc:
     {
-      'X-Linguist-API-Version'     => '1',
+      'X-lingohub-API-Version'     => '1',
       'User-Agent'                 => self.class.gem_version_string,
       'X-Ruby-Version'             => RUBY_VERSION,
       'X-Ruby-Platform'            => RUBY_PLATFORM,

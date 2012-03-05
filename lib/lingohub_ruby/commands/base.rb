@@ -1,20 +1,20 @@
 require 'fileutils'
 
-module Linguist::Command
+module Lingohub::Command
   class Base
-    include Linguist::Helpers
+    include Lingohub::Helpers
 
     attr_accessor :args
     attr_reader :autodetected_app
 
-    def initialize(args, linguist=nil)
+    def initialize(args, lingohub=nil)
       @args             = args
-      @linguist         = linguist
+      @lingohub         = lingohub
       @autodetected_project_name = false
     end
 
-    def linguist
-      @linguist ||= Linguist::Command.run_internal('auth:client', args)
+    def lingohub
+      @lingohub ||= Lingohub::Command.run_internal('auth:client', args)
     end
 
     def project_title(force=true)
@@ -99,20 +99,20 @@ module Linguist::Command
     end
 
     def escape(value)
-      linguist.escape(value)
+      lingohub.escape(value)
     end
 
     def project(title=nil)
       title ||= project_title
-      @project ||= linguist.project(title) 
+      @project ||= lingohub.project(title)
     end
   end
 
   class BaseWithApp < Base
     attr_accessor :app
 
-    def initialize(args, linguist=nil)
-      super(args, linguist)
+    def initialize(args, lingohub=nil)
+      super(args, lingohub)
       @app ||= extract_app
     end
   end

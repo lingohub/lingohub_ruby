@@ -34,7 +34,7 @@ module I18n
     private
 
     def enabled?
-      Linguist.environments.include?(current_env) rescue false
+      Lingohub.environments.include?(current_env) rescue false
     end
 
     def current_env
@@ -46,17 +46,17 @@ module I18n
     end
 
     def link_to_translation_phrase(translation_title)
-      username          = option_to_url(Linguist.username)
-      project           = option_to_url(Linguist.project)
+      username          = option_to_url(Lingohub.username)
+      project           = option_to_url(Lingohub.project)
       translation_title = translation_title.to_s.to_url
 
-      "#{Linguist.protocol}://#{Linguist.host}/#{username}/#{project}/translations/#{translation_title}/phrases/#{locale}"
+      "#{Lingohub.protocol}://#{Lingohub.host}/#{username}/#{project}/translations/#{translation_title}/phrases/#{locale}"
     end
 
     def option_to_url(option)
       if option.nil?
         ""
-      elsif Linguist.default_value?(option)
+      elsif Lingohub.default_value?(option)
         option
       else
         option.to_url

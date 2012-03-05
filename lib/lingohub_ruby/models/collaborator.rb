@@ -1,4 +1,4 @@
-module Linguist
+module Lingohub
   module Models
     class Collaborator
       attr_accessor :email, :display_name, :roles

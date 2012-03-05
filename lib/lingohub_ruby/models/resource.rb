@@ -1,4 +1,4 @@
-module Linguist
+module Lingohub
   module Models
     class Resource
       def initialize(client, link)

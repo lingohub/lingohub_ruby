@@ -1,7 +1,7 @@
-module Linguist
+module Lingohub
   module Models
-    require 'linguist_ruby/models/resource'
-    require 'linguist_ruby/models/collaborator'
+    require 'lingohub_ruby/models/resource'
+    require 'lingohub_ruby/models/collaborator'
 
     class Project
       def self.lazy_attr_accessor(*params)
@@ -48,7 +48,7 @@ module Linguist
           resource_hash = JSON.parse(response)
           members = resource_hash["resources"]["members"]
           members.each do |member|
-            @resources[member["name"]] = Linguist::Models::Resource.new(@client, member["link"]["href"])
+            @resources[member["name"]] = Lingohub::Models::Resource.new(@client, member["link"]["href"])
           end
         end
         @resources
@@ -62,7 +62,7 @@ module Linguist
           members = resource_hash["collaborators"]["members"]
           members.each do |member|
             link = member["link"]["href"] rescue ""
-            collaborator = Linguist::Models::Collaborator.new(@client, link)
+            collaborator = Lingohub::Models::Collaborator.new(@client, link)
             collaborator.email = member["email"]
             collaborator.display_name = member["display_name"]
             collaborator.roles = member["roles"]

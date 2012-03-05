@@ -1,4 +1,4 @@
-module Linguist::Command
+module Lingohub::Command
   class Collaborator < Base
     def list
       list = project.collaborators

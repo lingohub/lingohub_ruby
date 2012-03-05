@@ -1,4 +1,4 @@
-module Linguist
+module Lingohub
   module Helpers
     def home_directory
       running_on_windows? ? ENV['USERPROFILE'] : ENV['HOME']
@@ -46,12 +46,12 @@ module Linguist
 #        return true
 #      end
 
-      raise(Linguist::Command::CommandFailed, "No app specified.\nRun this command from app folder or set it adding --app <app name>") unless app
+      raise(Lingohub::Command::CommandFailed, "No app specified.\nRun this command from app folder or set it adding --app <app name>") unless app
 
       confirmed_app = extract_option('--confirm', false)
       if confirmed_app
         unless confirmed_app == app
-          raise(Linguist::Command::CommandFailed, "Confirmed app #{confirmed_app} did not match the selected app #{app}.")
+          raise(Lingohub::Command::CommandFailed, "Confirmed app #{confirmed_app} did not match the selected app #{app}.")
         end
         return true
       else
@@ -84,7 +84,7 @@ module Linguist
     end
 
     def run_command(command, args=[])
-      Linguist::Command.run_internal(command, args)
+      Lingohub::Command.run_internal(command, args)
     end
 
     def retry_on_exception(*exceptions)

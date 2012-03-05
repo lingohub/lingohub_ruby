@@ -1,19 +1,19 @@
 require 'readline'
 require 'launchy'
 
-module Linguist::Command
+module Lingohub::Command
   class Project < Base
     def login
-      Linguist::Command.run_internal "auth:reauthorize", args.dup
+      Lingohub::Command.run_internal "auth:reauthorize", args.dup
     end
 
     def logout
-      Linguist::Command.run_internal "auth:delete_credentials", args.dup
+      Lingohub::Command.run_internal "auth:delete_credentials", args.dup
       display "Local credentials cleared."
     end
 
     def list
-      list = linguist.projects.all
+      list = lingohub.projects.all
       if list.size > 0
         display "Projects:\n" + list.keys.map { |name|
           "- #{name}"
@@ -26,7 +26,7 @@ module Linguist::Command
     def create
       title = args.shift.downcase.strip rescue nil
       title ||= extract_from_dir_name
-      linguist.projects.create title
+      lingohub.projects.create title
       display("Created #{title}")
     end
 

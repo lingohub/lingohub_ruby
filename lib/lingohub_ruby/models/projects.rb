@@ -1,6 +1,6 @@
-module Linguist
+module Lingohub
   module Models
-    require 'linguist_ruby/models/project'
+    require 'lingohub_ruby/models/project'
 
     class Projects
 
@@ -19,7 +19,7 @@ module Linguist
         @projects = {}
         response = JSON.parse @client.get(PROJECT_URL).to_s
         response["projects"]["members"].each do |member|
-          project = Linguist::Models::Project.new(@client, member["link"][0]["href"])
+          project = Lingohub::Models::Project.new(@client, member["link"][0]["href"])
           @projects[member["title"]] = project
         end
         @projects

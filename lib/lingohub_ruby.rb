@@ -1,7 +1,7 @@
-require "linguist_ruby/client"
-require "linguist_ruby/rails3/railtie" if defined?(Rails)
+require "lingohub_ruby/client"
+require "lingohub_ruby/rails3/railtie" if defined?(Rails)
 
-module Linguist
+module Lingohub
   class << self
     attr_accessor :environments, :protocol, :host, :username, :project
 

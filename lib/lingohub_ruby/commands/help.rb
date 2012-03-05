@@ -1,4 +1,4 @@
-module Linguist::Command
+module Lingohub::Command
   class Help < Base
     class HelpGroup < Array
 
@@ -69,7 +69,7 @@ module Linguist::Command
     end
 
     def version
-      display Linguist::Client.version
+      display Lingohub::Client.version
     end
 
     def usage
@@ -96,4 +96,4 @@ module Linguist::Command
   end
 end
 
-Linguist::Command::Help.create_default_groups!
+Lingohub::Command::Help.create_default_groups!

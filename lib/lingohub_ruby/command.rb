@@ -1,14 +1,14 @@
-require 'linguist_ruby/helpers'
-require 'linguist_ruby/commands/base'
+require 'lingohub_ruby/helpers'
+require 'lingohub_ruby/commands/base'
 
 Dir["#{File.dirname(__FILE__)}/commands/*.rb"].each { |c| require c }
 
-module Linguist
+module Lingohub
   module Command
     class InvalidCommand < RuntimeError; end
     class CommandFailed  < RuntimeError; end
 
-    extend Linguist::Helpers
+    extend Lingohub::Helpers
 
     class << self
 
@@ -17,7 +17,7 @@ module Linguist
           run_internal 'auth:reauthorize', args.dup if retries > 0
           run_internal(command, args.dup)
         rescue InvalidCommand
-          error "Unknown command. Run 'linguist help' for usage information."
+          error "Unknown command. Run 'lingohub help' for usage information."
 #        rescue RestClient::Unauthorized
 #          if retries < 3
 #            STDERR.puts "Authentication failure"
@@ -31,7 +31,7 @@ module Linguist
 #          error extract_error(e.http_body) unless e.http_code == 402
 #          retry if run_internal('account:confirm_billing', args.dup)
 #        rescue RestClient::RequestTimeout
-#          error "API request timed out. Please try again, or contact support@lingui.st if this issue persists."
+#          error "API request timed out. Please try again, or contact team@lingohub.com if this issue persists."
         rescue CommandFailed => e
           error e.message
         rescue Interrupt => e
@@ -39,9 +39,9 @@ module Linguist
         end
       end
 
-      def run_internal(command, args, linguist=nil)
+      def run_internal(command, args, lingohub=nil)
         klass, method = parse(command)
-        runner = klass.new(args, linguist)
+        runner = klass.new(args, lingohub)
         raise InvalidCommand unless runner.respond_to?(method)
         runner.send(method)
       end
@@ -51,13 +51,13 @@ module Linguist
         case parts.size
           when 1
             begin
-              return eval("Linguist::Command::#{command.capitalize}"), :index
+              return eval("Lingohub::Command::#{command.capitalize}"), :index
             rescue NameError, NoMethodError
-              return Linguist::Command::Project, command.to_sym
+              return Lingohub::Command::Project, command.to_sym
             end
           else
             begin
-              const = Linguist::Command
+              const = Lingohub::Command
               command = parts.pop
               parts.each { |part| const = const.const_get(part.capitalize) }
               return const, command.to_sym

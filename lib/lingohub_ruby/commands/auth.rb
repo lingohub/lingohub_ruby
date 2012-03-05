@@ -1,21 +1,21 @@
-require "linguist_ruby/client"
+require "lingohub_ruby/client"
 
-module Linguist::Command
+module Lingohub::Command
   class Auth < Base
     attr_accessor :credentials
 
     def client
-      @client ||= init_linguist
+      @client ||= init_lingohub
     end
 
-    def init_linguist
-      client = Linguist::Client.new(:username => user, :auth_token => auth_token, :host => host)
+    def init_lingohub
+      client = Lingohub::Client.new(:username => user, :auth_token => auth_token, :host => host)
 #      client.on_warning { |msg| self.display("\n#{msg}\n\n") }
       client
     end
 
     def host
-      ENV['LINGUIST_HOST'] || 'lingui.st'
+      ENV['lingohub_HOST'] || 'lingohub.com'
     end
 
     # just a stub; will raise if not authenticated
@@ -38,7 +38,7 @@ module Linguist::Command
     end
 
     def credentials_file
-      "#{home_directory}/.linguist/credentials"
+      "#{home_directory}/.lingohub/credentials"
     end
 
     def get_credentials # :nodoc:
@@ -62,14 +62,14 @@ module Linguist::Command
     end
 
     def ask_for_credentials
-      puts "Enter your Linguist credentials."
+      puts "Enter your Lingohub credentials."
 
       print "Email: "
       user = ask
 
       print "Password: "
       password = running_on_windows? ? ask_for_password_on_windows : ask_for_password
-      api_key = Linguist::Client.auth(:username => user, :password => password, :host => host)['api_key']
+      api_key = Lingohub::Client.auth(:username => user, :password => password, :host => host)['api_key']
 
       [user, api_key]
     end
