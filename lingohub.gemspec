@@ -14,7 +14,7 @@ Gem::Specification.new do |gem|
 
   # If you need to check in files that aren't .rb files, add them here
   gem.files        = Dir["{lib}/**/*.rb", "bin/*", "LICENSE", "*.md"]
-  gem.require_path = 'lib'
+  gem.require_paths = %w[lib]
 
   gem.add_dependency "rest-client", "~> 1.6.7"
   gem.add_dependency "launchy",     "~> 2.0.5"
