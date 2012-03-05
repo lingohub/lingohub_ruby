@@ -1,5 +1,5 @@
-require 'lingohub_ruby/helpers'
-require 'lingohub_ruby/commands/base'
+require 'lingohub/helpers'
+require 'lingohub/commands/base'
 
 Dir["#{File.dirname(__FILE__)}/commands/*.rb"].each { |c| require c }
 

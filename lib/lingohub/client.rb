@@ -1,10 +1,10 @@
 require 'rest_client'
 require 'uri'
 require 'time'
-require 'lingohub_ruby/version'
+require 'lingohub/version'
 require 'vendor/okjson'
 require 'json'
-require 'lingohub_ruby/models/projects'
+require 'lingohub/models/projects'
 
 # A Ruby class to call the lingohub REST API.  You might use this if you want to
 # manage your lingohub apps from within a Ruby program, such as Capistrano.

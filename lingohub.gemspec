@@ -1,15 +1,15 @@
-require File.expand_path("../lib/lingohub_ruby/version", __FILE__)
+require File.expand_path("../lib/lingohub/version", __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.name    = "lingohub_ruby"
+  gem.name    = "lingohub"
   gem.version = Lingohub::VERSION
 
-  gem.author      = "Lingohub"
+  gem.author      = "lingohub GmbH"
   gem.email       = "team@lingohub.com"
   gem.homepage    = "https://lingohub.com"
   
-  gem.summary     = "Client library and CLI to translate Rails apps with Lingohub."
-  gem.description = "Client library and command-line tool to translate Rails apps with Lingohub."
+  gem.summary     = "Client library and CLI to translate Ruby based apps with lingohub."
+  gem.description = "Client library and command-line tool to translate Ruby based apps with lingohub."
   gem.executables = "lingohub"
 
   gem.required_rubygems_version = ">= 1.3.6"

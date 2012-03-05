@@ -1,4 +1,4 @@
-require "lingohub_ruby/client"
+require "lingohub/client"
 
 module Lingohub::Command
   class Auth < Base

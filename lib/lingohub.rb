@@ -1,5 +1,5 @@
-require "lingohub_ruby/client"
-require "lingohub_ruby/rails3/railtie" if defined?(Rails)
+require "lingohub/client"
+require "lingohub/rails3/railtie" if defined?(Rails)
 
 module Lingohub
   class << self

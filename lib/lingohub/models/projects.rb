@@ -1,6 +1,6 @@
 module Lingohub
   module Models
-    require 'lingohub_ruby/models/project'
+    require 'lingohub/models/project'
 
     class Projects
 

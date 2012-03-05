@@ -1,7 +1,7 @@
 module Lingohub
   module Models
-    require 'lingohub_ruby/models/resource'
-    require 'lingohub_ruby/models/collaborator'
+    require 'lingohub/models/resource'
+    require 'lingohub/models/collaborator'
 
     class Project
       def self.lazy_attr_accessor(*params)
