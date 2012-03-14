@@ -98,7 +98,7 @@ module Lingohub
         @fetched = true
         response = @client.get @link
         project_hash = JSON.parse(response)
-        links = project_hash["link"]
+        links = project_hash["links"]
         link = links[0]["href"]
         weburl = links[1]["href"]
         translations_url = links[2]["href"]
