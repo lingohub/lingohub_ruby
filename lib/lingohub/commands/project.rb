@@ -31,8 +31,8 @@ module Lingohub::Command
     end
 
     def rename
-      oldtitle = args[0].downcase.strip rescue raise(CommandFailed, "Invalid old project name")
-      newtitle = args[1].downcase.strip rescue raise(CommandFailed, "Invalid new project name")
+      oldtitle = args[0].strip rescue raise(CommandFailed, "Invalid old project name")
+      newtitle = args[1].strip rescue raise(CommandFailed, "Invalid new project name")
 
       project(oldtitle).update(:title => newtitle)
       display("Project renamed from #{oldtitle} to #{newtitle}")
