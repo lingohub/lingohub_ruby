@@ -59,7 +59,7 @@ module Lingohub
           @collaborators = []
           response = @client.get(self.collaborators_url)
           resource_hash = JSON.parse(response)
-          members = resource_hash["collaborators"]["members"]
+          members = resource_hash["members"]
           members.each do |member|
             link = member["link"]["href"] rescue ""
             collaborator = Lingohub::Models::Collaborator.new(@client, link)
