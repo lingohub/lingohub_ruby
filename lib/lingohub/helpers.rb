@@ -37,7 +37,7 @@ module Lingohub
 
     def confirm(message="Are you sure you wish to continue? (y/n)?")
       display("#{message} ", false)
-      ask.downcase == 'y'
+      ask == 'y'
     end
 
     def confirm_command(app)
@@ -61,7 +61,7 @@ module Lingohub
         display " !    To proceed, type \"#{app}\" or re-run this command with --confirm #{app}"
         display ""
         display "> ", false
-        if ask.downcase != app
+        if ask != app
           display " !    Input did not match #{app}. Aborted."
           false
         else
