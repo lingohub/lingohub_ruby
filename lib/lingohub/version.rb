@@ -1,5 +1,3 @@
 module Lingohub
-  module Client
-    VERSION = '0.0.3'
-  end
+  VERSION = '0.0.3'
 end

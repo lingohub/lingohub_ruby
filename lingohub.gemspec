@@ -4,7 +4,7 @@ require File.expand_path("../lib/lingohub/version", __FILE__)
 
 Gem::Specification.new do |gem|
   gem.name          = 'lingohub'
-  gem.version       = Lingohub::Client::VERSION
+  gem.version       = Lingohub::VERSION
   gem.authors       = [ 'lingohub GmbH' ]
   gem.email         = [ 'team@lingohub.com' ]
   gem.description   = 'Client library and command-line tool to translate Ruby based apps with lingohub.'
