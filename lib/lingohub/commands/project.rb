@@ -24,7 +24,7 @@ module Lingohub::Command
     end
 
     def create
-      title = args.shift.downcase.strip rescue nil
+      title = args.shift.strip rescue nil
       title ||= extract_from_dir_name
       lingohub.projects.create title
       display("Created #{title}")
