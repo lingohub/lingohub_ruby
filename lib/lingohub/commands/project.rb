@@ -54,8 +54,8 @@ module Lingohub::Command
       display "Web URL:        #{project.weburl}"
       display "Owner:          #{project.owner}"
 
-      if confirm_command(project_title)
-        redisplay "Destroying #{project_title} ... "
+      if confirm_command(project.title)
+        redisplay "Destroying #{project.title} ... "
         project.destroy
         display "done"
       end
