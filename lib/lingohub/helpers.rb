@@ -40,7 +40,7 @@ module Lingohub
       ask.downcase == 'y'
     end
 
-    def confirm_command(app = app)
+    def confirm_command(app)
 #      if extract_option('--force')
 #        display("Warning: The --force switch is deprecated, and will be removed in a future release. Use --confirm #{app} instead.")
 #        return true
