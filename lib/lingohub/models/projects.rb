@@ -18,8 +18,8 @@ module Lingohub
         return @projects if defined? @projects
         @projects = {}
         response = JSON.parse @client.get(PROJECT_URL).to_s
-        response["projects"]["members"].each do |member|
-          project = Lingohub::Models::Project.new(@client, member["link"][0]["href"])
+        response["members"].each do |member|
+          project = Lingohub::Models::Project.new(@client, member["links"][0]["href"])
           @projects[member["title"]] = project
         end
         @projects
