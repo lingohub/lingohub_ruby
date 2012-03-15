@@ -25,4 +25,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency('taps',    '~> 0.3.23')
   gem.add_development_dependency('webmock', '~> 1.8.0')
   gem.add_development_dependency('i18n',    '~> 0.6.0')
+  gem.add_development_dependency('vcr',     '~> 2.0.0')
 end
