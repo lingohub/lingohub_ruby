@@ -46,9 +46,9 @@ module Lingohub
           @resources = {}
           response = @client.get(self.resources_url)
           resource_hash = JSON.parse(response)
-          members = resource_hash["resources"]["members"]
+          members = resource_hash["members"]
           members.each do |member|
-            @resources[member["name"]] = Lingohub::Models::Resource.new(@client, member["link"]["href"])
+            @resources[member["name"]] = Lingohub::Models::Resource.new(@client, member["links"][0]["href"])
           end
         end
         @resources
