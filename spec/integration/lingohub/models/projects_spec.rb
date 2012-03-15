@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Lingohub::Models::Projects do
 
   let(:projects) { Lingohub::Spec.projects }
-  let(:title)    { 'Test' }
+  let(:title)    { 'Test'                  }
 
   describe '#create' do
     subject { projects.create(title) }

@@ -27,15 +27,15 @@ describe Lingohub::Models::Project do
       projects[title].destroy
     end
 
-    its(:owner)              { should == owner  }
-    its(:title)              { should == title  }
-    its(:link)               { should == link   }
-    its(:weburl)             { should == weburl }
-    its(:resources_url)      { should == resources_url }
-    its(:collaborators_url)  { should == collaborators_url }
-    its(:invitations_url)    { should == invitations_url   }
-    its(:translations_url)   { should == translations_url   }
-    its(:search_url)         { should == search_url   }
+    its(:owner)             { should == owner             }
+    its(:title)             { should == title             }
+    its(:link)              { should == link              }
+    its(:weburl)            { should == weburl            }
+    its(:resources_url)     { should == resources_url     }
+    its(:collaborators_url) { should == collaborators_url }
+    its(:invitations_url)   { should == invitations_url   }
+    its(:translations_url)  { should == translations_url  }
+    its(:search_url)        { should == search_url        }
 
     its(:translations_count) do
       pending 'this should imo return 0 but returns nil instead'
@@ -48,9 +48,9 @@ describe Lingohub::Models::Project do
 
     subject { project.destroy }
 
-    let(:project)            { projects[title]                         }
-    let(:projects)           { Lingohub::Spec.projects                 }
-    let(:title)              { 'Test'                                  }
+    let(:project)  { projects[title]         }
+    let(:projects) { Lingohub::Spec.projects }
+    let(:title)    { 'Test'                  }
 
     before do
       projects.create(title)
