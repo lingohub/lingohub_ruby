@@ -48,8 +48,8 @@ describe Lingohub::Models::Project do
 
     subject { project.destroy }
 
-    let(:project)  { projects[title]         }
     let(:projects) { Lingohub::Spec.projects }
+    let(:project)  { projects[title]         }
     let(:title)    { 'Test'                  }
 
     before do
