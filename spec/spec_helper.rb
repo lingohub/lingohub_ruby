@@ -15,6 +15,11 @@ RSpec.configure do |c|
   # so we can use `:vcr` rather than `:vcr => true`;
   # in RSpec 3 this will no longer be necessary.
   c.treat_symbols_as_metadata_keys_with_true_values = true
+
+  # support inclusion filter :focus
+  c.filter_run_including :focus => true
+  # will run all the examples when none match the inclusion filter
+  c.run_all_when_everything_filtered = true
 end
 
 module Lingohub
