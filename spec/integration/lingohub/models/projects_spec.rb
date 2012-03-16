@@ -6,26 +6,67 @@ describe Lingohub::Models::Projects do
   let(:title)    { 'Test'                  }
 
   describe '#create' do
-    subject { projects.create(title) }
 
-    after do
-      projects[title].destroy
+    subject { OkJson.decode(response) }
+
+    let(:response) { projects.create(title) }
+
+    context 'when an invalid title is given' do
+
+      context 'when nil is given as title' do
+        let(:title) { nil }
+
+        specify { expect { subject }.to raise_error(RestClient::BadRequest) }
+      end
+
+      context 'when an already existing title is given' do
+        before do
+          projects.create(title)
+        end
+
+        after do
+          projects[title].destroy
+        end
+
+        specify { expect { subject }.to raise_error(RestClient::BadRequest) }
+      end
     end
 
-    it 'creates the project on the server' do
-      subject
-      projects[title].should be_instance_of(Lingohub::Models::Project)
+    context 'when a valid title is given' do
+
+      after do
+        projects[title].destroy
+      end
+
+      it { should be_instance_of(Hash) }
+
+      specify do
+        expect { subject }.to change { Lingohub::Spec.projects.all.size }.by(1)
+      end
+
+      it 'should create the project on the server' do
+        subject
+        Lingohub::Spec.projects[title].title.should == title
+      end
     end
   end
 
   describe '#[]' do
     subject { projects[title] }
 
-    context 'with no projects defined' do
+    context 'when the given title is nil' do
+      let(:title) { nil }
+
       it { should be_nil }
     end
 
-    context 'with projects defined' do
+    context 'when no project with the given title is available' do
+      let(:title) { 'N/A' }
+
+      it { should be_nil }
+    end
+
+    context 'when a project with the given title is available' do
 
       before do
         projects.create(title)
@@ -37,7 +78,7 @@ describe Lingohub::Models::Projects do
 
       it { should be_instance_of(Lingohub::Models::Project) }
 
-      it 'returns the available project' do
+      it 'should be the requested project' do
         subject.title.should == title
       end
     end
@@ -47,11 +88,12 @@ describe Lingohub::Models::Projects do
 
     subject { projects.all }
 
-    context 'with no projects defined' do
-      it { should be_empty }
+    context 'when no projects are available' do
+      it { should be_instance_of(Hash) }
+      it { should be_empty             }
     end
 
-    context 'with projects defined' do
+    context 'when projects are available' do
 
       let(:project) { subject[title] }
 
@@ -63,10 +105,11 @@ describe Lingohub::Models::Projects do
         projects[title].destroy
       end
 
-      it { should_not be_empty }
+      it { should be_instance_of(Hash) }
+      it { should have_key(title)      }
 
-      it 'returns the available project' do
-        project.title.should == title
+      it 'should return a project keyed by its title' do
+        subject[title].title.should == title
       end
     end
   end
