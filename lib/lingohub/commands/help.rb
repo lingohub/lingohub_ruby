@@ -36,6 +36,8 @@ module Lingohub::Command
         group.command 'help',                         'show this usage'
         group.command 'version',                      'show the gem version'
         group.space
+        group.command 'login',                        "let's you (re)login"
+        group.command 'logout',                       'logs you out by clearing your current credentials'
       end
 
       group 'Project Commands' do |group|
