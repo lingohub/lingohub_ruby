@@ -39,7 +39,7 @@ module Lingohub
         :username   => 'foo',
         :password   => 'bar',
         :auth_token => '89111d2469b74f7728a2bcee6b5bbb50ce25e13b435a60f9fbc4218e5a990045',
-        :host       => 'localhost:3000'
+        :host       => 'http://localhost:3000'
       }
     end
 
