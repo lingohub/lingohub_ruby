@@ -75,7 +75,6 @@ class Lingohub::Client
     args     = [method, payload, headers].compact
     response = resource(uri, credentials).send(*args)
 
-#    extract_warning(response)
     response
   end
 
@@ -86,12 +85,11 @@ class Lingohub::Client
     else
       host_uri = host =~ /^https?/ ? "#{host}/#{api_uri_part}" : "https://#{host}/#{api_uri_part}"
       RestClient::Resource.new(host_uri, :user => credentials[:username], :password => credentials[:password])[uri]
-#      RestClient::Resource.new("http://localhost:3000/api/v1", :user => credentials[:username], :password => credentials[:password])[uri]
     end
   end
 
   def api_uri_part
-    "api/v1"
+    "api/#{Lingohub::API_VERSION}"
   end
 
   def lingohub_headers # :nodoc:
