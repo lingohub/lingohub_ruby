@@ -3,7 +3,6 @@
 ### Maintainers
 
 * Markus Merzinger (https://github.com/maerzbow)
-* Martin Gamsjäger (https://github.com/snusnu)
 * Helmut Juskewycz (https://github.com/hjuskewycz)
 
 ## License
