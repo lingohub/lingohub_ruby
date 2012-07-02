@@ -41,7 +41,9 @@ module Lingohub::Command
       display "=== #{project.title}"
       display "Web URL:        #{project.weburl}"
       display "Owner:          #{project.owner}"
-      display "Number of translation:      #{project.translations_count}"
+      display "Opensource:     #{project.opensource}"
+      display "Locales:        #{project.project_locales}"
+      display "Description:    #{project.description}"
     end
 
     def open

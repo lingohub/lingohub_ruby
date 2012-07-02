@@ -18,14 +18,16 @@ module Lingohub
         end
       end
 
-      lazy_attr_accessor(:title, :link, :weburl, :resources_url, :collaborators_url, :invitations_url, :translations_url, :search_url, :translations_count, :owner)
+
+      lazy_attr_accessor(:title, :link, :weburl, :resources_url, :collaborators_url, :invitations_url,
+                         :translations_url, :search_url, :owner, :description, :opensource, :project_locales)
 
       def initialize(client, link)
         @client = client
         @link = link
       end
 
-      def create!(attributes={})
+      def create!(attributes={ })
         self.title = attributes[:title]
       end
 
@@ -33,17 +35,17 @@ module Lingohub
         @client.delete self.link
       end
 
-      def update(attributes={})
-        @client.put self.link, {:project => attributes}
+      def update(attributes={ })
+        @client.put self.link, { :project => attributes }
       end
 
       def invite_collaborator(email)
-        @client.post(self.invitations_url, :invitation => {:email => email})
+        @client.post(self.invitations_url, :invitation => { :email => email })
       end
 
       def resources
         unless defined? @resources
-          @resources = {}
+          @resources = { }
           response = @client.get(self.resources_url)
           resource_hash = JSON.parse(response)
           members = resource_hash["members"]
@@ -85,8 +87,8 @@ module Lingohub
       end
 
       def pull_search_results(directory, filename, query, locale = nil)
-        parameters = {:filename => filename, :query => query}
-        parameters.merge!({:iso2_slug => locale}) unless locale.nil? or locale.strip.empty?
+        parameters = { :filename => filename, :query => query }
+        parameters.merge!({ :iso2_slug => locale }) unless locale.nil? or locale.strip.empty?
 
         content = @client.get(search_url, parameters)
         save_to_file(File.join(directory, filename), content)
@@ -106,8 +108,10 @@ module Lingohub
         collaborators_url = links[4]["href"]
         invitations_url = links[5]["href"]
         search_url = links[6]["href"]
+
         init_attributes :title => project_hash["title"], :link => link, :weburl => weburl,
-                        :owner => project_hash["owner_email"], :translations_count => project_hash["translations_count"],
+                        :owner => project_hash["owner_email"], :description => project_hash["description"],
+                        :opensource => project_hash["opensource"], :project_locales => project_hash["project_locales"],
                         :translations_url => translations_url, :resources_url => resources_url,
                         :collaborators_url => collaborators_url, :invitations_url => invitations_url,
                         :search_url => search_url
