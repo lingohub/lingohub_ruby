@@ -77,7 +77,7 @@ module Lingohub::Command
           project.pull_resource(directory, file_name)
           display("#{file_name} downloaded")
         rescue
-          display "Error downloading #{file_name}. Response: #{$!.response || $!.message}"
+          display "Error downloading #{file_name}. Response: #{$!.message || $!.response}"
         end
       end
     end
@@ -89,7 +89,7 @@ module Lingohub::Command
           project.push_resource(path, extract_locale_from_args)
           display("#{file_name} uploaded")
         rescue
-          display "Error uploading #{file_name}. Response: #{$!.response || $!.message}"
+          display "Error uploading #{file_name}. Response: #{$!.message || $!.response}"
         end
       end
     end
