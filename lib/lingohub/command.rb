@@ -27,11 +27,10 @@ module Lingohub
 #          end
 #        rescue RestClient::ResourceNotFound => e
 #          error extract_not_found(e.http_body)
-#        rescue RestClient::RequestFailed => e
-#          error extract_error(e.http_body) unless e.http_code == 402
-#          retry if run_internal('account:confirm_billing', args.dup)
-#        rescue RestClient::RequestTimeout
-#          error "API request timed out. Please try again, or contact team@lingohub.com if this issue persists."
+        rescue RestClient::RequestFailed => e
+          error extract_error(e.http_body) unless e.http_code == 402
+        rescue RestClient::RequestTimeout
+          error "API request timed out. Please try again, or contact team@lingohub.com if this issue persists."
         rescue CommandFailed => e
           error e.message
         rescue Interrupt => e
@@ -67,32 +66,32 @@ module Lingohub
         end
       end
 
-#      def extract_not_found(body)
-#        body =~ /^[\w\s]+ not found$/ ? body : "Resource not found"
-#      end
-#
-#      def extract_error(body)
-#        msg = parse_error_xml(body) || parse_error_json(body) || parse_error_plain(body) || 'Internal server error'
-#        msg.split("\n").map { |line| ' !   ' + line }.join("\n")
-#      end
-#
-#      def parse_error_xml(body)
-#        xml_errors = REXML::Document.new(body).elements.to_a("//errors/error")
-#        msg = xml_errors.map { |a| a.text }.join(" / ")
-#        return msg unless msg.empty?
-#      rescue Exception
-#      end
-#
-#      def parse_error_json(body)
-#        json = OkJson.decode(body.to_s)
-#        json['error']
-#      rescue OkJson::ParserError
-#      end
-#
-#      def parse_error_plain(body)
-#        return unless body.respond_to?(:headers) && body.headers[:content_type].include?("text/plain")
-#        body.to_s
-#      end
+      def extract_not_found(body)
+        body =~ /^[\w\s]+ not found$/ ? body : "Resource not found"
+      end
+
+      def extract_error(body)
+        msg = parse_error_xml(body) || parse_error_json(body) || parse_error_plain(body) || 'Internal server error'
+        msg.split("\n").map { |line| ' !   ' + line }.join("\n")
+      end
+
+      def parse_error_xml(body)
+        xml_errors = REXML::Document.new(body).elements.to_a("//errors/error")
+        msg = xml_errors.map { |a| a.text }.join(" / ")
+        return msg unless msg.empty?
+      rescue Exception
+      end
+
+      def parse_error_json(body)
+        json = OkJson.decode(body.to_s)
+        json['error'] || json.to_s
+      rescue OkJson::ParserError
+      end
+
+      def parse_error_plain(body)
+        return unless body.respond_to?(:headers) && body.headers[:content_type].include?("text/plain")
+        body.to_s
+      end
     end
   end
 end
