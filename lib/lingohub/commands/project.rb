@@ -50,7 +50,7 @@ module Lingohub::Command
       Launchy.open project.weburl
     end
 
-    def destroy
+    def archive
       display "=== #{project.title}"
       display "Web URL:        #{project.weburl}"
       display "Owner:          #{project.owner}"
