@@ -67,16 +67,27 @@ module Lingohub::Command
       print "Email: "
       user = ask
 
-      print "Password: "
+
+      print "Password  (please leave blank if you want to use your API token): "
       password = running_on_windows? ? ask_for_password_on_windows : ask_for_password
-      api_key = Lingohub::Client.auth(:username => user, :password => password, :host => host)['api_key']
+
+      if password.empty?
+        print "API key: "
+        api_key = ask
+      else
+        api_key = retrieve_api_key(password, user)
+      end
 
       [user, api_key]
     end
 
+    def retrieve_api_key(password, user)
+      Lingohub::Client.auth(:username => user, :password => password, :host => host)['api_key']
+    end
+
     def ask_for_password_on_windows
       require "Win32API"
-      char     = nil
+      char = nil
       password = ''
 
       while char = Win32API.new("crtdll", "_getch", [], "L").Call do
@@ -108,7 +119,7 @@ module Lingohub::Command
       rescue ::RestClient::Unauthorized, ::RestClient::ResourceNotFound => e
         puts "EXCEPTION #{e}"
         delete_credentials
-        @client      = nil
+        @client = nil
         @credentials = nil
         display "Authentication failed."
         retry if retry_login?
