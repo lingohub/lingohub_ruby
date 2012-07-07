@@ -1,5 +1,19 @@
 ## lingohub ruby
 
+### Documentation
+
+#### Retrieving resource files
+
+This is a simple example how we retrieve our resource files from lingohub in our _local repository_.
+We use the option `--locale <locale as filter>` for `translation:down` because our resource files are
+stored in a folder per locale:
+
+``` bash
+lingohub translation:down --locale 'en' --directory config/locales/en --project 'lingohub' --all
+lingohub translation:down --locale 'de' --directory config/locales/de --project 'lingohub' --all
+```
+
+
 ### Maintainers
 
 * Markus Merzinger (https://github.com/maerzbow)

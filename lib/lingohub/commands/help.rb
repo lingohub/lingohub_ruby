@@ -59,6 +59,7 @@ module Lingohub::Command
 
       group 'Translation Commands' do |group|
         group.command 'translation:down --all --directory <path> --project <name>',                                          'download all resource files'
+        group.command 'translation:down --locale <iso2_slug> --all --directory <path> --project <name>',                     'download all resource files, using the given locale as filter'
         group.command 'translation:down <file1> <file2> ... --directory <path> --project <name>',                            'download specific resource files'
         group.command 'translation:down <file> --query <query> --directory <path> --locale <iso2_slug> --project <name>',    'search for translations and download them to file'
         group.command 'translation:up <file1> <file2> ... --locale <iso2_slug> --project <name>',                            'upload specific resource files'

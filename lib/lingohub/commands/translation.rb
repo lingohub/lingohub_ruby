@@ -72,10 +72,12 @@ module Lingohub::Command
 
     def pull_resources(directory)
       files_source = extract_all_from_args ? project.resources.keys : args
+      locale_as_filter = extract_locale_from_args
+
       files_source.each do |file_name|
         begin
-          project.pull_resource(directory, file_name)
-          display("#{file_name} downloaded")
+          downloaded = project.pull_resource(directory, file_name, locale_as_filter)
+          display("#{file_name} downloaded") if downloaded
         rescue
           display "Error downloading #{file_name}. Response: #{$!.message || $!.response}"
         end

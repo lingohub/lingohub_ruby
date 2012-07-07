@@ -1,8 +1,11 @@
 module Lingohub
   module Models
     class Resource
-      def initialize(client, link)
+      attr_accessor :locale
+
+      def initialize(client, locale, link)
         @client = client
+        @locale = locale
         @link   = link
       end
 

@@ -50,7 +50,7 @@ module Lingohub
           resource_hash = JSON.parse(response)
           members = resource_hash["members"]
           members.each do |member|
-            @resources[member["name"]] = Lingohub::Models::Resource.new(@client, member["links"][0]["href"])
+            @resources[member["name"]] = Lingohub::Models::Resource.new(@client, member["project_locale"], member["links"][0]["href"])
           end
         end
         @resources
@@ -74,9 +74,16 @@ module Lingohub
         @collaborators
       end
 
-      def pull_resource(directory, filename)
+      def pull_resource(directory, filename, locale_as_filter = nil)
         raise "Project does not contain that file." unless self.resources.has_key?(filename)
-        save_to_file(File.join(directory, filename), self.resources[filename].content)
+        resource = self.resources[filename]
+
+        if locale_as_filter.nil? || resource_has_locale(resource, locale_as_filter)
+          save_to_file(File.join(directory, filename), resource.content)
+          true
+        else
+          false
+        end
       end
 
       def push_resource(path, locale)
@@ -129,6 +136,9 @@ module Lingohub
         File.open(path, 'w+') { |f| f.write(content) }
       end
 
+      def resource_has_locale(resource, locale_as_filter)
+        resource.locale == locale_as_filter
+      end
     end
   end
 end
