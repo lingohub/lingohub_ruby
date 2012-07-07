@@ -4,7 +4,7 @@
 
 #### Retrieving resource files
 
-This is a simple example how we retrieve our resource files from lingohub in our _local repository_.
+This is a simple example how we retrieve our resource files from lingohub in our _local repository_.  
 We use the option `--locale <locale as filter>` for `translation:down` because our resource files are
 stored in a folder per locale:
 
