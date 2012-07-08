@@ -15,7 +15,7 @@ module Lingohub::Command
     end
 
     def host
-      ENV['lingohub_HOST'] || 'lingohub.com'
+      ENV['LINGOHUB_HOST'] || 'lingohub.com'
     end
 
     # just a stub; will raise if not authenticated
