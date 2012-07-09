@@ -15,9 +15,11 @@ module Lingohub::Command
     def list
       list = lingohub.projects.all
       if list.size > 0
-        display "Projects:\n" + list.keys.map { |name|
-          "- #{name}"
-        }.join("\n")
+        display "Projects:\n"
+        list.each_pair { |name, project|
+          inactive_str = project.inactive? ? '(inactive)' : ''
+          display "- #{name} #{inactive_str}"
+        }
       else
         display "You have no projects."
       end
