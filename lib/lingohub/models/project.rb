@@ -20,7 +20,7 @@ module Lingohub
 
 
       lazy_attr_accessor(:title, :link, :weburl, :resources_url, :collaborators_url, :invitations_url,
-                         :translations_url, :search_url, :owner, :description, :opensource, :project_locales)
+                         :translations_url, :search_url, :unarchive_url, :owner, :description, :opensource, :project_locales)
 
       def initialize(client, link)
         @client = client
@@ -33,6 +33,10 @@ module Lingohub
 
       def destroy
         @client.delete self.link
+      end
+
+      def unarchive
+        @client.put self.unarchive_url
       end
 
       def update(attributes={ })
@@ -115,13 +119,15 @@ module Lingohub
         collaborators_url = links[4]["href"]
         invitations_url = links[5]["href"]
         search_url = links[6]["href"]
+        unarchive_url = links[7]["href"]
 
         init_attributes :title => project_hash["title"], :link => link, :weburl => weburl,
                         :owner => project_hash["owner_email"], :description => project_hash["description"],
                         :opensource => project_hash["opensource"], :project_locales => project_hash["project_locales"],
                         :translations_url => translations_url, :resources_url => resources_url,
                         :collaborators_url => collaborators_url, :invitations_url => invitations_url,
-                        :search_url => search_url
+                        :search_url => search_url,
+                        :unarchive_url => unarchive_url
       end
 
       def init_attributes(attributes)

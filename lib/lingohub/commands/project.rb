@@ -56,11 +56,18 @@ module Lingohub::Command
       display "Owner:          #{project.owner}"
 
       if confirm_command(project.title)
-        redisplay "Destroying #{project.title} ... "
+        redisplay "Archiving #{project.title} ... "
         project.destroy
         display "done"
       end
     end
+
+    def reactivate
+      redisplay "Reactivate #{project.title} ... "
+      project.unarchive
+      display "done"
+    end
+
 
   end
 
