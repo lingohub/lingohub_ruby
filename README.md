@@ -9,8 +9,8 @@ We use the option `--locale <locale as filter>` for `translation:down` because o
 stored in a folder per locale:
 
 ``` bash
-lingohub translation:down --locale 'en' --directory config/locales/en --project 'lingohub' --all
-lingohub translation:down --locale 'de' --directory config/locales/de --project 'lingohub' --all
+lingohub resource:down --locale 'en' --directory config/locales/en --project 'lingohub' --all
+lingohub resource:down --locale 'de' --directory config/locales/de --project 'lingohub' --all
 ```
 
 

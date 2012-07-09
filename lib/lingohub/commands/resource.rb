@@ -1,5 +1,5 @@
 module Lingohub::Command
-  class Translation < Base
+  class Resource < Base
     def down
       project #project validation
 
