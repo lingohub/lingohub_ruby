@@ -4,19 +4,19 @@ module Lingohub::Command
       project #project validation
 
       directory = File.join(Dir.pwd, extract_directory_from_args || "")
-      raise(CommandFailed, "Error downloading translations. Path #{directory} does not exist") unless File.directory?(directory)
+      raise(CommandFailed, "Error downloading resources. Path #{directory} does not exist") unless File.directory?(directory)
 
       if extract_query_from_args
         pull_search_results(directory)
       else
-        pull_resources(directory)
+        download_resources(directory)
       end
     end
 
     def up
       project #project validation
 
-      push_resources(args)
+      upload_resources(args)
     end
 
     private
@@ -70,13 +70,13 @@ module Lingohub::Command
       end
     end
 
-    def pull_resources(directory)
+    def download_resources(directory)
       files_source = extract_all_from_args ? project.resources.keys : args
       locale_as_filter = extract_locale_from_args
 
       files_source.each do |file_name|
         begin
-          downloaded = project.pull_resource(directory, file_name, locale_as_filter)
+          downloaded = project.download_resource(directory, file_name, locale_as_filter)
           display("#{file_name} downloaded") if downloaded
         rescue
           display "Error downloading #{file_name}. Response: #{$!.message || $!.response}"
@@ -84,11 +84,11 @@ module Lingohub::Command
       end
     end
 
-    def push_resources(resources)
+    def upload_resources(resources)
       resources.each do |file_name|
         begin
           path = File.expand_path(file_name, Dir.pwd)
-          project.push_resource(path, extract_locale_from_args)
+          project.upload_resource(path, extract_locale_from_args)
           display("#{file_name} uploaded")
         rescue
           display "Error uploading #{file_name}. Response: #{$!.message || $!.response}"

@@ -78,7 +78,7 @@ module Lingohub
         @collaborators
       end
 
-      def pull_resource(directory, filename, locale_as_filter = nil)
+      def download_resource(directory, filename, locale_as_filter = nil)
         raise "Project does not contain that file." unless self.resources.has_key?(filename)
         resource = self.resources[filename]
 
@@ -90,7 +90,7 @@ module Lingohub
         end
       end
 
-      def push_resource(path, locale)
+      def upload_resource(path, locale)
         raise "Path #{path} does not exists" unless File.exists?(path)
         request = { :file => File.new(path, "rb") }
         request.merge!({ :iso2_slug => locale }) if locale
