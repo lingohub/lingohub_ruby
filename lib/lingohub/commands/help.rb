@@ -46,7 +46,8 @@ module Lingohub::Command
         group.command 'project:info --project <name>',        'show project info, like web url and number of translations'
         group.command 'project:open --project <name>',        'open the project in a web browser'
         group.command 'project:rename <oldname> <newname>',   'rename the project'
-        group.command 'project:archive --project <name>',      'archive the project'
+        group.command 'project:deactivate --project <name>',   'deactivates the project'
+        group.command 'project:activate --project <name>',   'activates a deactivated project again'
         group.space
       end
 
