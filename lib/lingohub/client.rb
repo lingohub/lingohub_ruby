@@ -36,7 +36,7 @@ class Lingohub::Client
     @user       = options[:username]
     @password   = options[:password]
     @auth_token = options[:auth_token]
-    @host       = options[:host] || 'lingohub.com'
+    @host       = options[:host] || 'api.lingohub.com'
   end
 
   def credentials
@@ -90,7 +90,7 @@ class Lingohub::Client
   end
 
   def api_uri_part
-    "api/#{Lingohub::API_VERSION}"
+    "#{Lingohub::API_VERSION}"
   end
 
   def lingohub_headers # :nodoc:

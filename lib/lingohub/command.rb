@@ -71,7 +71,7 @@ module Lingohub
       end
 
       def extract_error(body)
-        msg = parse_error_xml(body) || parse_error_json(body) || parse_error_plain(body) || 'Internal server error'
+        msg = parse_error_xml(body) || parse_error_json(body) || parse_error_plain(body) || 'Internal server error ' + body
         msg.split("\n").map { |line| ' !   ' + line }.join("\n")
       end
 
