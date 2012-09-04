@@ -72,9 +72,9 @@ class Lingohub::Client
   def process(method, uri, extra_headers={ }, payload=nil)
     headers = lingohub_headers.merge(extra_headers)
     args     = [method, payload, headers].compact
-    # puts "---- URI --- #{uri} - #{args}"
+    puts "---- URI --- #{uri} - #{args}"
     response = resource(uri, credentials).send(*args)
-    #puts response
+    puts response
 
     response
   end
@@ -85,6 +85,7 @@ class Lingohub::Client
       RestClient::Resource.new(uri, :user => credentials[:username], :password => credentials[:password])
     else
       host_uri = host =~ /^https?/ ? "#{host}/#{api_uri_part}" : "https://#{host}/#{api_uri_part}"
+      puts host_uri + "/" + uri
       RestClient::Resource.new(host_uri, :user => credentials[:username], :password => credentials[:password])[uri]
     end
   end
