@@ -1,4 +1,4 @@
 module Lingohub
-  VERSION = '0.1.0'
+  VERSION = '0.1.1'
   API_VERSION = 'v1'
 end
