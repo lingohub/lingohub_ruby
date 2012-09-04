@@ -72,9 +72,9 @@ class Lingohub::Client
   def process(method, uri, extra_headers={ }, payload=nil)
     headers = lingohub_headers.merge(extra_headers)
     args     = [method, payload, headers].compact
-    puts "---- URI --- #{uri} - #{args}"
+    #puts "---- URI --- #{uri} - #{args}"
     response = resource(uri, credentials).send(*args)
-    puts response
+    #puts response
 
     response
   end
