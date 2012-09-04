@@ -60,9 +60,9 @@ module Lingohub::Command
 
       group 'Translation Commands' do |group|
         group.command 'resource:down --all --directory <path> --project <name>',                                          'download all resource files'
-        group.command 'resource:down --locale <iso2_slug> --all --directory <path> --project <name>',                     'download all resource files, using the given locale as filter'
+        group.command 'resource:down --locale <iso2_code> --all --directory <path> --project <name>',                     'download all resource files, using the given locale as filter'
         group.command 'resource:down <file1> <file2> ... --directory <path> --project <name>',                            'download specific resource files'
-        group.command 'resource:up <file1> <file2> ... --locale <iso2_slug> --project <name>',                            'upload specific resource files, a locale may be specified to tell lingohub the locale of file content'
+        group.command 'resource:up <file1> <file2> ... --locale <iso2_code> --project <name>',                            'upload specific resource files, a locale may be specified to tell lingohub the locale of file content'
         group.space
       end
     end
