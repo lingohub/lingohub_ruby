@@ -94,10 +94,10 @@ module Lingohub
         end
       end
 
-      def upload_resource(path, locale)
+      def upload_resource(path, locale, strategy)
         raise "Path #{path} does not exists" unless File.exists?(path)
         request = { :file => File.new(path, "rb") }
-        request.merge!({ :iso2_slug => locale }) if locale
+        request.merge!({ :iso2_slug => locale, :strategy => strategy }) if locale
         @client.post(self.resources_url, request)
       end
 

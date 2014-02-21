@@ -43,6 +43,15 @@ module Lingohub::Command
       @locale
     end
 
+    def extract_strategy_from_args
+      return @strategy if defined? @strategy
+      @strategy = extract_option('--strategy', false)
+      unless Lingohub::Models::Resource::STRATEGIES.include?(@strategy)
+        raise(CommandFailed, "You must specify a strategy after --strategy, possible values are: " + Lingohub::Models::Resource::STRATEGIES.join(", "))
+      end
+      @strategy
+    end
+
     def extract_all_from_args
       return @all if defined? @all
       @all = extract_option('--all', true)
@@ -88,7 +97,7 @@ module Lingohub::Command
       resources.each do |file_name|
         begin
           path = File.expand_path(file_name, Dir.pwd)
-          project.upload_resource(path, extract_locale_from_args)
+          project.upload_resource(path, extract_locale_from_args, extract_strategy_from_args)
           display("#{file_name} uploaded")
         rescue
           display "Error uploading #{file_name}. Response: #{$!.message || $!.response}"
