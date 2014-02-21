@@ -45,7 +45,7 @@ module Lingohub::Command
 
     def extract_strategy_from_args
       return @strategy if defined? @strategy
-      @strategy = extract_option('--strategy', false)
+      @strategy = extract_option('--strategy', Lingohub::Models::Resource::STRATEGY_MASTER_LOCALE_STRUCTURE)
       unless Lingohub::Models::Resource::STRATEGIES.include?(@strategy)
         raise(CommandFailed, "You must specify a strategy after --strategy, possible values are: " + Lingohub::Models::Resource::STRATEGIES.join(", "))
       end
