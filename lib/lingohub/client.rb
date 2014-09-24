@@ -74,12 +74,13 @@ class Lingohub::Client
     args     = [method, payload, headers].compact
     
      if credentials[:password] == nil || credentials[:password].empty?
-        uri = uri + "?auth_token=#{credentials[:username]}"
+        uri = uri + ((uri.include?('?')) ? "&" : "?")
+        uri = uri + "auth_token=#{credentials[:username]}"
       end
 
     puts "---- URI --- #{uri} - #{args}"
     response = resource(uri, credentials).send(*args)
-    #puts response
+    puts response
 
     response
   end
