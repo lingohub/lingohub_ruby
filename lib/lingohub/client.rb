@@ -77,7 +77,7 @@ class Lingohub::Client
         uri = uri + "?auth_token=#{credentials[:username]}"
       end
 
-    #puts "---- URI --- #{uri} - #{args}"
+    puts "---- URI --- #{uri} - #{args}"
     response = resource(uri, credentials).send(*args)
     #puts response
 
@@ -89,9 +89,9 @@ class Lingohub::Client
     if uri =~ /^https?/
       RestClient::Resource.new(uri, :user => credentials[:username], :password => credentials[:password])
     else
-      host_uri = host =~ /^https?/ ? "#{host}/#{api_uri_part}" : "https://#{host}/#{api_uri_part}"
+      host_uri = host =~ /^https?/ ? "#{host}/#{api_uri_part}" : "http://#{host}/#{api_uri_part}"
       
-     # puts host_uri + "/" + uri
+      puts host_uri + "/" + uri
       RestClient::Resource.new(host_uri, :user => credentials[:username], :password => credentials[:password])[uri]
     end
   end

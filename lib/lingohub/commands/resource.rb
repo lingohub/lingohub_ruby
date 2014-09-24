@@ -1,5 +1,14 @@
 module Lingohub::Command
   class Resource < Base
+    EXPECTED_STRATEGY_PARAMETERS = [
+        'source:createNew',
+        'source:updateExisting',
+        'source:deactivateMissing',
+        'target:createNew',
+        'target:updateExisting',
+        'target:deactivateMissing',
+      ]
+
     def down
       project #project validation
 
@@ -41,6 +50,19 @@ module Lingohub::Command
       @locale = extract_option('--locale', false)
       raise(CommandFailed, "You must specify a locale after --locale") if @locale == false
       @locale
+    end
+
+    def extract_strategy_parameters
+      result = {}  
+      
+      EXPECTED_STRATEGY_PARAMETERS.each do |parameter|
+        value = extract_option("--#{parameter}", nil)
+        if value
+          bool_value = to_bool(value, parameter)
+          result.merge!({ parameter => value })
+        end
+      end  
+      result
     end
 
     def extract_all_from_args
@@ -88,12 +110,18 @@ module Lingohub::Command
       resources.each do |file_name|
         begin
           path = File.expand_path(file_name, Dir.pwd)
-          project.upload_resource(path, extract_locale_from_args)
+          project.upload_resource(path, extract_locale_from_args, extract_strategy_parameters)
           display("#{file_name} uploaded")
         rescue
           display "Error uploading #{file_name}. Response: #{$!.message || $!.response}"
         end
       end
+    end
+
+    def to_bool(value, setting)
+      return true if value == true || value =~ (/(true|t|yes|y|1)$/i)
+      return false if value == false || value =~ (/(false|f|no|n|0)$/i)
+      raise ArgumentError.new("boolean value expected for setting #{setting}, but was: \"#{value}\"")
     end
   end
 end
