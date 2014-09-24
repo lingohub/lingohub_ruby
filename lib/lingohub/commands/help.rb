@@ -1,3 +1,5 @@
+require 'lingohub/commands/resource'
+
 module Lingohub::Command
   class Help < Base
     class HelpGroup < Array
@@ -62,7 +64,15 @@ module Lingohub::Command
         group.command 'resource:down --all --directory <path> --project <name>',                                          'download all resource files'
         group.command 'resource:down --locale <iso2_code> --all --directory <path> --project <name>',                     'download all resource files, using the given locale as filter'
         group.command 'resource:down <file1> <file2> ... --directory <path> --project <name>',                            'download specific resource files'
-        group.command 'resource:up <file1> <file2> ... --locale <iso2_code> --project <name>',                            'upload specific resource files, a locale may be specified to tell lingohub the locale of file content'
+        
+        up_command = 'resource:up <file1> <file2> ... --locale <iso2_code> --project <name>'
+      
+        strategy_desc = ""
+        Lingohub::Command::Resource::EXPECTED_STRATEGY_PARAMETERS.each do |parameter|
+          strategy_desc << " --#{parameter} true|false"
+        end  
+
+        group.command "resource:up <file1> <file2> ... --locale <iso2_code> --project <name> [#{strategy_desc}]",          "upload specific resource files, a locale may be specified to tell lingohub the locale of file content"
         group.space
       end
     end
