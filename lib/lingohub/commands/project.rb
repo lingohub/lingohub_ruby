@@ -52,25 +52,6 @@ module Lingohub::Command
       Launchy.open project.weburl
     end
 
-    def deactivate
-      display "=== #{project.title}"
-      display "Web URL:        #{project.weburl}"
-      display "Owner:          #{project.owner}"
-
-      if confirm_command(project.title)
-        redisplay "Deactivating #{project.title} ... "
-        project.destroy
-        display "done"
-      end
-    end
-
-    def activate
-      redisplay "Activating #{project.title} ... "
-      project.activate
-      display "done"
-    end
-
-
   end
 
 end

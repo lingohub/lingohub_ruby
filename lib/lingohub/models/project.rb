@@ -124,7 +124,6 @@ module Lingohub
         collaborators_url = links[4]["href"]
         invitations_url = links[5]["href"]
         search_url = links[6]["href"]
-        activate_url = links[7]["href"]
 
         init_attributes :title => project_hash["title"], :link => link,
                         :deactivated_at => project_hash["deactivated_at"], :weburl => weburl,
@@ -132,7 +131,7 @@ module Lingohub
                         :opensource => project_hash["opensource"], :project_locales => project_hash["project_locales"],
                         :translations_url => translations_url, :resources_url => resources_url,
                         :collaborators_url => collaborators_url, :invitations_url => invitations_url,
-                        :search_url => search_url, :activate_url => activate_url
+                        :search_url => search_url
       end
 
       def init_attributes(attributes)
