@@ -13,8 +13,6 @@ describe Lingohub::Models::Project do
     let(:link)               { Lingohub::Spec.project_link(title_slug) }
     let(:weburl)             { Lingohub::Spec.weburl(title_slug)       }
     let(:resources_url)      { "#{link}/resources"                     }
-    let(:collaborators_url)  { "#{link}/collaborators"                 }
-    let(:invitations_url)    { "#{link}/invitations"                   }
     let(:translations_url)   { "#{link}/translations"                  }
     let(:search_url)         { "#{link}/resources/search"              }
     let(:translations_count) { 0                                       }
@@ -32,8 +30,6 @@ describe Lingohub::Models::Project do
     its(:link)              { should == link              }
     its(:weburl)            { should == weburl            }
     its(:resources_url)     { should == resources_url     }
-    its(:collaborators_url) { should == collaborators_url }
-    its(:invitations_url)   { should == invitations_url   }
     its(:translations_url)  { should == translations_url  }
     its(:search_url)        { should == search_url        }
 

@@ -1,7 +1,6 @@
 module Lingohub
   module Models
     require 'lingohub/models/resource'
-    require 'lingohub/models/collaborator'
 
     class Project
       def self.lazy_attr_accessor(*params)
@@ -18,9 +17,8 @@ module Lingohub
         end
       end
 
-
-      lazy_attr_accessor(:title, :link, :deactivated_at, :weburl, :resources_url, :collaborators_url, :invitations_url,
-                         :translations_url, :search_url, :activate_url, :owner, :description, :opensource, :project_locales)
+      lazy_attr_accessor(:title, :link, :deactivated_at, :weburl, :resources_url,
+                         :translations_url, :search_url, :activate_url, :owner, :description, :project_locales)
 
       def initialize(client, link)
         @client = client
@@ -43,10 +41,6 @@ module Lingohub
         @client.put self.link, { :project => attributes }
       end
 
-      def invite_collaborator(email)
-        @client.post(self.invitations_url, :invitation => { :email => email })
-      end
-
       def inactive?
         !deactivated_at.nil?
       end
@@ -62,24 +56,6 @@ module Lingohub
           end
         end
         @resources
-      end
-
-      def collaborators
-        unless defined? @collaborators
-          @collaborators = []
-          response = @client.get(self.collaborators_url)
-          resource_hash = JSON.parse(response)
-          members = resource_hash["members"]
-          members.each do |member|
-            link = member["link"]["href"] rescue ""
-            collaborator = Lingohub::Models::Collaborator.new(@client, link)
-            collaborator.email = member["email"]
-            collaborator.display_name = member["display_name"]
-            collaborator.roles = member["roles"]
-            @collaborators << collaborator
-          end
-        end
-        @collaborators
       end
 
       def download_resource(directory, filename, locale_as_filter = nil)
@@ -121,16 +97,13 @@ module Lingohub
         weburl = links[1]["href"]
         translations_url = links[2]["href"]
         resources_url = links[3]["href"]
-        collaborators_url = links[4]["href"]
-        invitations_url = links[5]["href"]
-        search_url = links[6]["href"]
+        search_url = links[4]["href"]
 
         init_attributes :title => project_hash["title"], :link => link,
                         :deactivated_at => project_hash["deactivated_at"], :weburl => weburl,
                         :owner => project_hash["owner_email"], :description => project_hash["description"],
-                        :opensource => project_hash["opensource"], :project_locales => project_hash["project_locales"],
+                        :project_locales => project_hash["project_locales"],
                         :translations_url => translations_url, :resources_url => resources_url,
-                        :collaborators_url => collaborators_url, :invitations_url => invitations_url,
                         :search_url => search_url
       end
 

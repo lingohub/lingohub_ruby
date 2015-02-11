@@ -43,7 +43,6 @@ module Lingohub::Command
       display "=== #{project.title}"
       display "Web URL:        #{project.weburl}"
       display "Owner:          #{project.owner}"
-      display "Opensource:     #{project.opensource}"
       display "Locales:        #{project.project_locales}"
       display "Description:    #{project.description}"
     end
