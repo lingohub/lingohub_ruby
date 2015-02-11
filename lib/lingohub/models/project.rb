@@ -25,26 +25,6 @@ module Lingohub
         @link = link
       end
 
-      def create!(attributes={ })
-        self.title = attributes[:title]
-      end
-
-      def destroy
-        @client.delete self.link
-      end
-
-      def activate
-        @client.put self.activate_url, {}
-      end
-
-      def update(attributes={ })
-        @client.put self.link, { :project => attributes }
-      end
-
-      def inactive?
-        !deactivated_at.nil?
-      end
-
       def resources
         unless defined? @resources
           @resources = { }

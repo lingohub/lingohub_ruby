@@ -39,22 +39,4 @@ describe Lingohub::Models::Project do
     end
 
   end
-
-  describe '#destroy' do
-
-    subject { project.destroy }
-
-    let(:projects) { Lingohub::Spec.projects }
-    let(:project)  { projects[title]         }
-    let(:title)    { 'Test'                  }
-
-    before do
-      projects.create(title)
-    end
-
-    it 'should destroy the project' do
-      subject
-      Lingohub::Spec.projects.all.should be_empty
-    end
-  end
 end

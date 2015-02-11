@@ -10,10 +10,6 @@ module Lingohub
         @client   = client
       end
 
-      def create(title)
-        @client.post(PROJECT_URL, :project => {:title => title})
-      end
-
       def all
         return @projects if defined? @projects
         @projects = {}

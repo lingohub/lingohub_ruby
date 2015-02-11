@@ -44,10 +44,7 @@ module Lingohub::Command
 
       group 'Project Commands' do |group|
         group.command 'project:list',                         'list your projects'
-        group.command 'project:create <name>',                'create a new project'
-        group.command 'project:info --project <name>',        'show project info, like web url and number of translations'
         group.command 'project:open --project <name>',        'open the project in a web browser'
-        group.command 'project:rename <oldname> <newname>',   'rename the project'
         group.space
       end
 

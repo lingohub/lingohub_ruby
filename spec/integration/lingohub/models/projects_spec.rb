@@ -5,52 +5,6 @@ describe Lingohub::Models::Projects do
   let(:projects) { Lingohub::Spec.projects }
   let(:title)    { 'Test'                  }
 
-  describe '#create' do
-
-    subject { OkJson.decode(response) }
-
-    let(:response) { projects.create(title) }
-
-    context 'when an invalid title is given' do
-
-      context 'when nil is given as title' do
-        let(:title) { nil }
-
-        specify { expect { subject }.to raise_error(RestClient::BadRequest) }
-      end
-
-      context 'when an already existing title is given' do
-        before do
-          projects.create(title)
-        end
-
-        after do
-          projects[title].destroy
-        end
-
-        specify { expect { subject }.to raise_error(RestClient::BadRequest) }
-      end
-    end
-
-    context 'when a valid title is given' do
-
-      after do
-        projects[title].destroy
-      end
-
-      it { should be_instance_of(Hash) }
-
-      specify do
-        expect { subject }.to change { Lingohub::Spec.projects.all.size }.by(1)
-      end
-
-      it 'should create the project on the server' do
-        subject
-        Lingohub::Spec.projects[title].title.should == title
-      end
-    end
-  end
-
   describe '#[]' do
     subject { projects[title] }
 
