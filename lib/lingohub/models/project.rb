@@ -17,8 +17,8 @@ module Lingohub
         end
       end
 
-      lazy_attr_accessor(:title, :link, :deactivated_at, :weburl, :resources_url,
-                         :translations_url, :search_url, :activate_url, :owner, :description, :project_locales)
+      lazy_attr_accessor(:title, :link, :weburl, :resources_url,
+                         :translations_url, :search_url, :owner, :description, :project_locales)
 
       def initialize(client, link)
         @client = client
@@ -80,7 +80,7 @@ module Lingohub
         search_url = links[4]["href"]
 
         init_attributes :title => project_hash["title"], :link => link,
-                        :deactivated_at => project_hash["deactivated_at"], :weburl => weburl,
+                        :weburl => weburl,
                         :owner => project_hash["owner_email"], :description => project_hash["description"],
                         :project_locales => project_hash["project_locales"],
                         :translations_url => translations_url, :resources_url => resources_url,
