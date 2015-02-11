@@ -30,14 +30,6 @@ module Lingohub::Command
 
     private
 
-    def rails_environment?
-      true #TODO
-    end
-
-    def rails_locale_dir
-      Dir.pwd + "/conf/locales"
-    end
-
     def extract_directory_from_args
       return @directory if defined? @directory
       @directory = extract_option('--directory', false)
@@ -53,15 +45,15 @@ module Lingohub::Command
     end
 
     def extract_strategy_parameters
-      result = {}  
-      
+      result = {}
+
       EXPECTED_STRATEGY_PARAMETERS.each do |parameter|
         value = extract_option("--#{parameter}", nil)
         if value
           bool_value = to_bool(value, parameter)
           result.merge!({ parameter => value })
         end
-      end  
+      end
       result
     end
 

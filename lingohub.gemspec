@@ -19,11 +19,9 @@ Gem::Specification.new do |gem|
   gem.add_dependency('launchy',     '~> 2.0.5')
   gem.add_dependency('stringex',    '~> 1.3.2')
 
-  gem.add_development_dependency('rake',    '~> 0.9.2')
-  gem.add_development_dependency('rspec',   '~> 2.8.0')
-  gem.add_development_dependency('fakefs',  '~> 0.4.0')
-  gem.add_development_dependency('taps',    '~> 0.3.23')
-  gem.add_development_dependency('webmock', '~> 1.8.0')
-  gem.add_development_dependency('i18n',    '~> 0.6.0')
-  gem.add_development_dependency('vcr',     '~> 2.0.0')
+  # gem.add_development_dependency('rake',    '~> 0.9.2')
+  # gem.add_development_dependency('rspec',   '~> 2.8.0')
+  # gem.add_development_dependency('fakefs',  '~> 0.4.0')
+  # gem.add_development_dependency('taps',    '~> 0.3.23')
+  # gem.add_development_dependency('webmock', '~> 1.8.0')
 end
