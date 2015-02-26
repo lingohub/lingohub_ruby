@@ -78,7 +78,7 @@ class Lingohub::Client
         uri = uri + "auth_token=#{credentials[:username]}"
       end
 
-    #puts "---- URI --- #{uri} - #{args}"
+    #puts "---- URI --- #{uri} - #{args} - credentials #{credentials}"
     response = resource(uri, credentials).send(*args)
 
     response
