@@ -1,6 +1,14 @@
-## lingohub ruby
+## lingohub client
 
-### Documentation
+Client library and command-line tool to translate apps with [LingoHub](https://lingohub.com/).
+
+### Install
+
+``` bash
+gem install lingohub
+```
+
+### Usage
 
 #### Retrieving resource files
 
@@ -21,4 +29,4 @@ lingohub resource:down --locale 'de' --directory config/locales/de --project 'li
 
 ## License
 
-MIT License. Copyright 2012 lingohub GmbH. http://lingohub.com
+MIT License. Copyright 2012 lingohub GmbH. https://lingohub.com
