@@ -25,8 +25,8 @@ lingohub resource:down --locale 'de' --directory config/locales/de --project 'li
 ### Maintainers
 
 * Markus Merzinger (https://github.com/maerzbow)
-* Helmut Juskewycz (https://github.com/hjuskewycz)
+* Helmut Juskewycz (https://github.com/hemju)
 
 ## License
 
-MIT License. Copyright 2012 lingohub GmbH. https://lingohub.com
+MIT License. Copyright 2017 lingohub GmbH. https://lingohub.com
