@@ -45,7 +45,6 @@ module Lingohub::Command
       group 'Project Commands' do |group|
         group.command 'project:list',                         'list your projects'
         group.command 'project:open --project <name>',        'open the project in a web browser'
-        group.space
       end
 
       group 'Translation Commands' do |group|
@@ -59,7 +58,6 @@ module Lingohub::Command
         end
 
         group.command "resource:up <file1> <file2> ... --locale <iso2_code> --project <name> --directory <path> [#{strategy_desc}]",          "upload specific resource files, a locale may be specified to tell lingohub the locale of file content"
-        group.space
       end
     end
 
@@ -72,22 +70,21 @@ module Lingohub::Command
     end
 
     def usage
-      longest_command_length = self.class.groups.map do |group|
-        group.map { |g| g.first.length }
-      end.flatten.max
-
       self.class.groups.inject(StringIO.new) do |output, group|
         output.puts "=== %s" % group.title
-        output.puts
+        longest_command_length = 30
 
         group.each do |command, description|
           if command.empty?
             output.puts
           else
-            output.puts "%-*s # %s" % [longest_command_length, command, description]
+            if command.length > longest_command_length
+              output.puts " %s\n    %s\n " % [command, description]
+            else
+              output.puts " %-*s # %s" % [longest_command_length, command, description]
+            end
           end
         end
-
         output.puts
         output
       end.string
