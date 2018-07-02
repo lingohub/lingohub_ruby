@@ -48,9 +48,9 @@ module Lingohub::Command
       end
 
       group 'Translation Commands' do |group|
-        group.command 'resource:down --all --directory <path> --project <name>',                                          'download all resource files'
-        group.command 'resource:down --locale <iso2_code> --all --directory <path> --project <name>',                     'download all resource files, using the given locale as filter'
-        group.command 'resource:down <file1> <file2> ... --directory <path> --project <name>',                            'download specific resource files'
+        group.command 'resource:down --all --directory <output-path> --project <name>',                                          'download all resource files'
+        group.command 'resource:down --locale <iso2_code> --all --directory <output-path> --project <name>',                     'download all resource files, using the given locale as filter'
+        group.command 'resource:down <file1> <file2> ... --directory <output-path> --project <name>',                            'download specific resource files'
 
         strategy_desc = ""
         Lingohub::Command::Resource::EXPECTED_STRATEGY_PARAMETERS.each do |parameter|
