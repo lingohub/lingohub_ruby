@@ -99,11 +99,11 @@ module Lingohub::Command
     end
 
     def upload_resources(resources)
-      directory = extract_option('--directory')
+      path = extract_option('--path')
       resources.each do |file_name|
         begin
-          path = File.expand_path(file_name, Dir.pwd)
-          project.upload_resource(path, extract_locale_from_args, extract_strategy_parameters, directory)
+          file = File.expand_path(file_name, Dir.pwd)
+          project.upload_resource(file, extract_locale_from_args, extract_strategy_parameters, path)
           display("#{file_name} uploaded")
         rescue
           display "Error uploading #{file_name}. Response: #{$!.message || $!.response}"
