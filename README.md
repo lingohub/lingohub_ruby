@@ -29,4 +29,4 @@ lingohub resource:down --locale 'de' --directory config/locales/de --project 'li
 
 ## License
 
-MIT License. Copyright 2017 lingohub GmbH. https://lingohub.com
+MIT License. Copyright 2018 lingohub GmbH. https://lingohub.com
