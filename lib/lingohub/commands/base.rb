@@ -20,7 +20,7 @@ module Lingohub::Command
     def project_title(force=true)
       project_title = extract_project_title_from_args
       unless project_title
-        project_title = extract_project_title_from_git || extract_project_title_from_dir_name ||
+        project_title = extract_project_title_from_dir_name ||
           raise(CommandFailed, "No project specified.\nRun this command from project folder or set it adding --project <title>") if force
         @autodetected_project_name = true
       end
@@ -38,40 +38,9 @@ module Lingohub::Command
       File.basename(dir)
     end
 
-    def extract_project_title_from_git
-      dir = Dir.pwd
-      return unless remotes = git_remotes(dir)
-
-      if remote = extract_option('--remote')
-        remotes[remote]
-      elsif remote = extract_app_from_git_config
-        remotes[remote]
-      else
-        apps = remotes.values.uniq
-        return apps.first if apps.size == 1
-      end
-    end
-
     def extract_app_from_git_config
       remote = git("config heroku.remote")
       remote == "" ? nil : remote
-    end
-
-    def git_remotes(base_dir=Dir.pwd)
-      remotes      = { }
-      original_dir = Dir.pwd
-      Dir.chdir(base_dir)
-
-      # TODO
-#      git("remote -v").split("\n").each do |remote|
-#        name, url, method = remote.split(/\s/)
-#        if url =~ /^git@#{heroku.host}:([\w\d-]+)\.git$/
-#          remotes[name] = $1
-#        end
-#      end
-
-      Dir.chdir(original_dir)
-      remotes
     end
 
     def extract_option(options, default=true)

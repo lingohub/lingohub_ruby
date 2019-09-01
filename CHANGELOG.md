@@ -1,3 +1,7 @@
+## 0.6.1
+
+* removed unused method which generates chdir warnings
+
 ## 0.0.4
 
 * added command line help for: login, logout
