@@ -1,3 +1,8 @@
+## 0.7.0
+
+* updates to Ruby 3.2.2
+
+
 ## 0.6.1
 
 * removed unused method which generates chdir warnings
