@@ -50,7 +50,7 @@ module Lingohub::Command
     end
 
     def read_credentials
-      File.exists?(credentials_file) and File.read(credentials_file).split("\n")
+      File.exist?(credentials_file) and File.read(credentials_file).split("\n")
     end
 
     def echo_off
